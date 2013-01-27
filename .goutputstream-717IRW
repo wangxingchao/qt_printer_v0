@@ -1,0 +1,68 @@
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+#include <QtGui/qmessagebox.h>
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{
+    //ui->setupUi(this);
+
+    //QAction* action = this->menuBar()->actions().at(2);
+
+    //QAction* subaction = action->menu()->actions().at(0);
+    //QObject::connect(subaction, SIGNAL(activated()), this, SLOT(ShowRunStatus()) );
+    /*
+    createActions();
+    createMenus();
+
+    QLabel* pLabel = qFindChild<QLabel*>(this, "label_wel");
+
+    QPalette pe;
+    pe.setColor(QPalette::WindowText,Qt::darkGreen);
+    pLabel->setPalette(pe);
+    */
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
+void MainWindow::ShowRunStatus()
+{
+    QMessageBox::information(this, tr("Test Title"), tr("Checked me!"));
+}
+
+void MainWindow::createMenus()
+{
+    PmjMenu = menuBar()->addMenu(tr("喷码机(&p)"));
+
+    PmjMenu->addAction(onAct);
+    PmjMenu->addAction(offAct);
+    PmjMenu->addAction(quickOnAct);
+    PmjMenu->addAction(quickOffAct);
+    PmjMenu->addAction(inkOpenAct);
+    PmjMenu->addAction(inkCloseAct);
+    PmjMenu->addAction(openSytleSetAct);
+
+    runStatusMenu = menuBar()->addMenu(tr("运行状态(&R)"));
+    //runStatusMenu->setFont(QFont("wenquanyi",9,3));//设置字体
+    runStatusMenu->addAction(lightStatusAct);
+    runStatusMenu->addAction(jetStatusAct);
+
+    paramMenu = menuBar()->addMenu(tr("参数(&P)"));
+    //runparamMenu->setFont(QFont("wenquanyi",9,3));//设置字体
+    paramMenu->addAction(penyinAct);
+
+    infoEditMenu = menuBar()->addMenu(tr("信息编辑(&E)"));
+    //infoEditMenu->setFont(QFont("wenquanyi",9,3));//设置字体
+    infoEditMenu->addAction(infoEditAct);
+
+
+    dayMaintainMenu = menuBar()->addMenu(tr("日常维护(&D)"));
+    //helpMenu->setFont(QFont("wenquanyi",9,3));//设置字体
+    dayMaintainMenu->addAction(jetRunStatusAct);
+    dayMaintainMenu->addAction(magneticValveAct);
+    dayMaintainMenu->addAction(shieldCheckAct);
+    inkChannelClearMenu = dayMaintainMenu->addMenu(tr("

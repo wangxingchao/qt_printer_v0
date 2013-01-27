@@ -1,0 +1,348 @@
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+#include <QtGui/qmessagebox.h>
+#include <QTextCodec> 
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{
+    //ui->setupUi(this);
+
+    //QAction* action = this->menuBar()->actions().at(2);
+
+    //QAction* subaction = action->menu()->actions().at(0);
+    //QObject::connect(subaction, SIGNAL(activated()), this, SLOT(ShowRunStatus()) );
+    /*
+    createActions();
+    createMenus();
+
+    QLabel* pLabel = qFindChild<QLabel*>(this, "label_wel");
+
+    QPalette pe;
+    pe.setColor(QPalette::WindowText,Qt::darkGreen);
+    pLabel->setPalette(pe);
+    */
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
+void MainWindow::ShowRunStatus()
+{
+    QMessageBox::information(this, tr("Test Title"), tr("Checked me!"));
+}
+
+void MainWindow::createMenus()
+{
+    PmjMenu = menuBar()->addMenu(tr("Ink-Jet(&p)"));
+    QTextCodec *codec = QTextCodec::codecForName("unifont");
+    QTextCodec::setCodecForLocale(codec);
+    QTextCodec::setCodecForCStrings(codec);
+    QTextCodec::setCodecForTr(codec);
+
+    PmjMenu->addAction(onAct);
+    PmjMenu->addAction(offAct);
+    PmjMenu->addAction(quickOnAct);
+    PmjMenu->addAction(quickOffAct);
+    PmjMenu->addAction(inkOpenAct);
+    PmjMenu->addAction(inkCloseAct);
+    PmjMenu->addAction(openSytleSetAct);
+
+    runStatusMenu = menuBar()->addMenu(tr("running(&R)"));
+    //runStatusMenu->setFont(QFont("wenquanyi",9,3));//ÉèÖÃ×ÖÌå
+    runStatusMenu->addAction(lightStatusAct);
+    runStatusMenu->addAction(jetStatusAct);
+
+    paramMenu = menuBar()->addMenu(tr("parameter(&P)"));
+    //runparamMenu->setFont(QFont("wenquanyi",9,3));//ÉèÖÃ×ÖÌå
+    paramMenu->addAction(penyinAct);
+
+    infoEditMenu = menuBar()->addMenu(tr("infoedit(&E)"));
+    //infoEditMenu->setFont(QFont("wenquanyi",9,3));//ÉèÖÃ×ÖÌå
+    infoEditMenu->addAction(infoEditAct);
+
+
+    dayMaintainMenu = menuBar()->addMenu(tr("daymaintain(&D)"));
+    //helpMenu->setFont(QFont("wenquanyi",9,3));//ÉèÖÃ×ÖÌå
+    dayMaintainMenu->addAction(jetRunStatusAct);
+    dayMaintainMenu->addAction(magneticValveAct);
+    dayMaintainMenu->addAction(shieldCheckAct);
+    inkChannelClearMenu = dayMaintainMenu->addMenu(tr("channel(&W)"));
+    inkChannelClearMenu->addAction(clearJetAct);
+    inkChannelClearMenu->addAction(clearChokeAct);
+    inkChannelClearMenu->addAction(clearMachineAct);
+
+    dataRecordMenu = menuBar()->addMenu(tr("record(&R)"));
+    dataRecordMenu->addAction(versionInfoAct);
+    dataRecordMenu->addAction(counterAct);
+    dataRecordMenu->addAction(initConfAct);
+    dataRecordMenu->addAction(jetStatusRecordAct);
+    dataRecordMenu->addAction(errorLogAct);
+
+
+    mainMenu =  menuBar()->addMenu(tr("main(&M)"));
+    //mainMenu->setFont(QFont("wenquanyi",9,3));//ÉèÖÃ×ÖÌå
+    mainMenu->addAction(mainWndAct);
+
+}
+
+void MainWindow::createActions()
+{
+    onAct = new QAction(tr("on"), this);
+    offAct = new QAction(tr("off"), this);
+    quickOnAct = new QAction(tr("quickon"), this);
+    quickOffAct = new QAction(tr("quickoff"), this);
+    inkOpenAct = new QAction(tr("inkopen"), this);
+    inkCloseAct = new QAction(tr("inkclose"), this);
+    openSytleSetAct = new QAction(tr("¿ª»ú·œÊœÉèÖÃ"), this);
+
+    lightStatusAct = new QAction(tr("ÖžÊŸµÆ×ŽÌ¬"), this);
+    jetStatusAct = new QAction(tr("Åç×ì×ŽÌ¬"), this);
+
+    penyinAct = new QAction(tr("ÅçÓ¡²ÎÊý"), this);
+
+    infoEditAct = new QAction(tr("ÐÂœš"), this);
+
+    jetRunStatusAct = new QAction(tr("ÔËÐÐ×ŽÌ¬"), this);
+    magneticValveAct = new QAction(tr("µçŽÅ·§²âÊÔŒ°Õ³¶È¿ØÖÆ"), this);
+    shieldCheckAct = new QAction(tr("ÆÁ±ÎŒì²â"), this);
+    clearJetAct = new QAction(tr("ÇåÏŽÅç×ì"), this);
+    clearChokeAct = new QAction(tr("ÅçÍ·ºí¹ÜÇåÏŽ"), this);
+    clearMachineAct = new QAction(tr("Õû»úÇåÏŽ"), this);
+
+    versionInfoAct = new QAction(tr("°æ±ŸÐÅÏ¢"), this);
+    counterAct = new QAction(tr("²úÆ·ŒÆÊýÆ÷"), this);
+    initConfAct = new QAction(tr("³õÊŒ»¯ÅäÖÃ"), this);
+    jetStatusRecordAct = new QAction(tr("ÅçÍ·×ŽÌ¬ŒÇÂŒ"), this);
+    errorLogAct = new QAction(tr("¹ÊÕÏÈÕÖŸ"), this);
+
+    mainWndAct = new QAction(tr("Ö÷Ž°Ìå"), this);
+
+    connect(jetStatusAct, SIGNAL(triggered()), this, SLOT(jetSatus()));
+
+    connect(jetRunStatusAct, SIGNAL(triggered()), this, SLOT(jetSatus()));
+    connect(magneticValveAct, SIGNAL(triggered()), this, SLOT(magnetic()));
+    connect(shieldCheckAct, SIGNAL(triggered()), this, SLOT(shieldCheck()));
+
+    connect(infoEditAct, SIGNAL(triggered()), this, SLOT(newifno()));
+
+    connect(lightStatusAct, SIGNAL(triggered()), this, SLOT(lightStatus()));
+    connect(openSytleSetAct, SIGNAL(triggered()), this, SLOT(openSytleSet()));
+    connect(penyinAct, SIGNAL(triggered()), this, SLOT(penYinParam()));
+
+    connect(versionInfoAct, SIGNAL(triggered()), this, SLOT(SysGeneral()));
+    connect(initConfAct, SIGNAL(triggered()), this, SLOT(initConfig()));
+    connect(counterAct, SIGNAL(triggered()), this, SLOT(counter()));
+    connect(jetStatusRecordAct, SIGNAL(triggered()), this, SLOT(maintainMan()));
+    connect(errorLogAct, SIGNAL(triggered()), this, SLOT(runlog()));
+
+    connect(mainWndAct, SIGNAL(triggered()), this, SLOT(mainWnd()));
+     /*connect(initConfigAct, SIGNAL(triggered()), this, SLOT(initConfig()));
+     connect(onoffAct, SIGNAL(triggered()), this, SLOT(onOffMachine()));
+     connect(printAct, SIGNAL(triggered()), this, SLOT(print()));
+
+     connect(runlogAct, SIGNAL(triggered()), this, SLOT(runlog()));
+     connect(dayMaintainAct, SIGNAL(triggered()), this, SLOT(dayMaintain()));
+
+     connect(LightStatusAct, SIGNAL(triggered()), this, SLOT(lightStatus()));
+     connect(OtherStatusAct, SIGNAL(triggered()), this, SLOT(otherStatus()));
+
+     connect(inkPileAct, SIGNAL(triggered()), this, SLOT(inkPileParam()));
+     connect(penyinAct, SIGNAL(triggered()), this, SLOT(penYinParam()));
+     connect(fontAct, SIGNAL(triggered()), this, SLOT(fontParam()));
+
+     connect(newAct, SIGNAL(triggered()), this, SLOT(newifno()));
+     connect(editAct, SIGNAL(triggered()), this, SLOT(edit()));
+
+     connect(SysGeneralAct, SIGNAL(triggered()), this, SLOT(SysGeneral()));
+     connect(UseManAct, SIGNAL(triggered()), this, SLOT(UseMan()));
+     connect(maintainManAct, SIGNAL(triggered()), this, SLOT(maintainMan()));
+
+     connect(mainWndAct, SIGNAL(triggered()), this, SLOT(mainWnd()));*/
+}
+
+void MainWindow::initConfig()
+{
+    //QMessageBox::information(this, tr("Test Title"), tr("initConfig!"));
+    m_controller->m_wnds[WND_INIT_CONF]->setGeometry(this->geometry());
+    this->hide();
+    m_controller->m_wnds[WND_INIT_CONF]->show();
+}
+
+void MainWindow::print()
+{
+    //QMessageBox::information(this, tr("Test Title"), tr("print!"));
+    m_controller->m_wnds[WND_PRINT]->setGeometry(this->geometry());
+    this->hide();
+    m_controller->m_wnds[WND_PRINT]->show();
+}
+
+void MainWindow::runlog()
+{
+    //QMessageBox::information(this, tr("Test Title"), tr("runlog!"));
+    m_controller->m_wnds[WND_RUNLOG]->setGeometry(this->geometry());
+    this->hide();
+    m_controller->m_wnds[WND_RUNLOG]->show();
+}
+
+
+void MainWindow::lightStatus()
+{
+    //QMessageBox::information(this, tr("Test Title"), tr("lightStatus!"));
+    m_controller->m_wnds[WND_LIGHTSTATUS]->setGeometry(this->geometry());
+    this->hide();
+
+    m_controller->m_wnds[WND_LIGHTSTATUS]->show();
+}
+
+void MainWindow::otherStatus()
+{
+    //QMessageBox::information(this, tr("Test Title"), tr("otherStatus!"));
+    m_controller->m_wnds[WND_OTHER_STATUS]->setGeometry(this->geometry());
+    this->hide();
+    m_controller->m_wnds[WND_OTHER_STATUS]->show();
+}
+
+
+void MainWindow::penYinParam()
+{
+    //QMessageBox::information(this, tr("Test Title"), tr("penYinParam!"));
+    m_controller->m_wnds[WND_PENYIN]->setGeometry(this->geometry());
+    this->hide();
+    m_controller->m_wnds[WND_PENYIN]->show();
+}
+
+void MainWindow::newifno()
+{
+    //QMessageBox::information(this, tr("Test Title"), tr("newifno!"));
+    m_controller->m_wnds[WND_NEWINFO]->setGeometry(this->geometry());
+    this->hide();
+    m_controller->m_wnds[WND_NEWINFO]->show();
+}
+
+
+
+void MainWindow::SysGeneral()
+{
+    //QMessageBox::information(this, tr("Test Title"), tr("SysGeneral!"));
+
+    m_controller->m_wnds[WND_SYS_GEN]->setGeometry(this->geometry());
+    this->hide();
+    m_controller->m_wnds[WND_SYS_GEN]->show();
+}
+
+void MainWindow::UseMan()
+{
+    //QMessageBox::information(this, tr("Test Title"), tr("UseMan!"));
+
+    m_controller->m_wnds[WND_USEMAN]->setGeometry(this->geometry());
+    this->hide();
+    m_controller->m_wnds[WND_USEMAN]->show();
+}
+
+void MainWindow::maintainMan()
+{
+    //QMessageBox::information(this, tr("Test Title"), tr("maintainMan!"));
+    m_controller->m_wnds[WND_MAINTAIN_MAN]->setGeometry(this->geometry());
+    this->hide();
+    m_controller->m_wnds[WND_MAINTAIN_MAN]->show();
+}
+
+void MainWindow::SetController(controller* pController)
+{
+
+    m_controller = pController;
+
+    MainWindow* w = m_controller->m_wnds[WND_MAIN];
+    if(this != w)
+    {
+        connect(this, SIGNAL(WriteDatagram(const char*,qint32)), w, SLOT(WriteDatagram(const char* , qint32)));
+    }
+
+    if(this == m_controller->m_wnds[WND_INIT_CONF])
+    {
+        connect(w, SIGNAL(UpdateUI_initCfg(QByteArray&)), this, SLOT(UpdateUI(QByteArray&)));
+    }
+    else if(this == m_controller->m_wnds[WND_PRINT])
+    {
+        connect(w, SIGNAL(UpdateUI_print(QByteArray&)), this, SLOT(UpdateUI(QByteArray&)));
+    }
+    else if(this == m_controller->m_wnds[WND_RUNLOG])
+    {
+        connect(w, SIGNAL(UpdateUI_runLog(QByteArray&)), this, SLOT(UpdateUI(QByteArray&)));
+    }
+    else if(this == m_controller->m_wnds[WND_LIGHTSTATUS])
+    {
+        connect(w, SIGNAL(UpdateUI_lightStatus(QByteArray&)), this, SLOT(UpdateUI(QByteArray&)));
+    }
+    else if(this == m_controller->m_wnds[WND_OTHER_STATUS])
+    {
+        connect(w, SIGNAL(UpdateUI_otherStatus(QByteArray&)), this, SLOT(UpdateUI(QByteArray&)));
+    }
+    else if(this == m_controller->m_wnds[WND_PENYIN])
+    {
+        connect(w, SIGNAL(UpdateUI_penyinParam(QByteArray&)), this, SLOT(UpdateUI(QByteArray&)));
+    }
+    else if(this == m_controller->m_wnds[WND_NEWINFO])
+    {
+        connect(w, SIGNAL(UpdateUI_newInfo(QByteArray&)), this, SLOT(UpdateUI(QByteArray&)));
+    }
+    else if(this == m_controller->m_wnds[WND_SYS_GEN])
+    {
+        connect(w, SIGNAL(UpdateUI_sysGen(QByteArray&)), this, SLOT(UpdateUI(QByteArray&)));
+    }
+    else if(this == m_controller->m_wnds[WND_USEMAN])
+    {
+        connect(w, SIGNAL(UpdateUI_usrMan(QByteArray&)), this, SLOT(UpdateUI(QByteArray&)));
+    }
+    else if(this == m_controller->m_wnds[WND_MAINTAIN_MAN])
+    {
+        connect(w, SIGNAL(UpdateUI_maintainMan(QByteArray&)), this, SLOT(UpdateUI(QByteArray&)));
+    }
+}
+
+void MainWindow::mainWnd()
+{
+    //QMessageBox::information(this, tr("Test Title"), tr("mainWnd!"));
+    m_controller->m_wnds[WND_MAIN]->setGeometry(this->geometry());
+    this->hide();
+    m_controller->m_wnds[WND_MAIN]->show();
+}
+
+void MainWindow::jetSatus()
+{
+    m_controller->m_wnds[WND_JETSTATUS]->setGeometry(this->geometry());
+    this->hide();
+    m_controller->m_wnds[WND_JETSTATUS]->show();
+}
+
+void MainWindow::openSytleSet()
+{
+    m_controller->m_wnds[WND_OPENSYTLESET]->setGeometry(this->geometry());
+    this->hide();
+    m_controller->m_wnds[WND_OPENSYTLESET]->show();
+}
+
+void MainWindow::magnetic()
+{
+    m_controller->m_wnds[WND_MAGNETIC]->setGeometry(this->geometry());
+    this->hide();
+    m_controller->m_wnds[WND_MAGNETIC]->show();
+}
+
+void MainWindow::shieldCheck()
+{
+    m_controller->m_wnds[WND_SHIELDCHECK]->setGeometry(this->geometry());
+    this->hide();
+    m_controller->m_wnds[WND_SHIELDCHECK]->show();
+}
+
+void MainWindow::counter()
+{
+    m_controller->m_wnds[WND_COUNTER]->setGeometry(this->geometry());
+    this->hide();
+    m_controller->m_wnds[WND_COUNTER]->show();
+}

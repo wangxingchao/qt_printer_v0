@@ -1,0 +1,52 @@
+#include "newinfownd.h"
+#include "ui_newinfownd.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include "qstring.h"
+
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/ioctl.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <QtGui>
+
+NewInfoWnd::NewInfoWnd(QWidget *parent) :
+    MainWindow(parent),
+    ui(new Ui::NewInfoWnd)
+{
+    ui->setupUi(this);
+    createActions();
+    createMenus();
+}
+
+NewInfoWnd::~NewInfoWnd()
+{
+    delete ui;
+}
+
+
+void NewInfoWnd::UpdateUI(QByteArray& byeArray)
+{
+    QMessageBox::information(this, tr("Test Title"), tr("NewInfo!"));
+}
+
+void NewInfoWnd::on_buttonBox_clicked(QAbstractButton *button)
+{
+    int rec;
+    const char* text;
+    rec = ui->comboBox->currentIndex();
+    printf("current rec selection %d\n", rec);
+
+    if (ui->comboBox->currentText() == tr("5*7")) {
+         printf("selection 5*7\n");
+     } else if (ui->comboBox->currentText() == tr("7*9")){
+         printf("selection 7*9\n");
+     } else {
+           printf("OTHER selection\n");
+    }
+    text = ui->lineEdit->text().toAscii().constData();
+    printf("current Ascii number %s\n", text);
+}

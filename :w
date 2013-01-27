@@ -1,0 +1,102 @@
+#include "jetstatus.h"
+#include "ui_jetstatus.h"
+#include "qstring.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/ioctl.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <errno.h>
+#define FPGA_TEST 0x0
+
+#define FPGA_READ_TEMP 0x1
+
+#define FPGA_READ_PRESSURE 0x2
+
+char *devname = "/dev/s3c-fpga";
+
+int fd;
+
+int ret;
+int buffer[3];
+
+int status;
+
+
+
+Jetstatus::Jetstatus(QWidget *parent) :
+    MainWindow(parent),
+    ui(new Ui::Jetstatus)
+{
+    ui->setupUi(this);
+    createActions();
+    createMenus();
+QTimer *timer = new QTimer(this);
+connect(timer, SIGNAL(timeout()), this, SLOT(update()));
+
+    fd = open(devname, O_RDWR);
+
+    if (fd < 0)
+          printf("open error\n");
+
+}
+
+Jetstatus::~Jetstatus()
+{
+    delete ui;
+}
+
+void Jetstatus::on_jetbutton_clicked(QAbstractButton *button)
+{
+    int i = 0;
+int ret;
+    i = ui->comboBox->currentIndex();
+    ui->comboBox_10->setCurrentIndex(i);
+
+
+    fprintf(stderr,"1: %s.",ui->lineEdit_15->text().toAscii().constData());
+
+
+    /* read pressure */
+#if 1 
+    ret = ioctl(fd, FPGA_READ_PRESSURE, &status);
+
+    if (ret < 0)
+
+       printf("ioctl error\n"); //print error message on screen
+#endif
+     printf("read data\n");
+    ret = read(fd, buffer, sizeof(int));
+
+    //print buffer[0] data to screen pressure label.
+   // buffer[0]
+   // button->
+}
+
+void Jetstatus::on_pushButton_clicked()
+{
+    /* read tempture */
+    QString str;
+#if 1 
+    ret = ioctl(fd, FPGA_READ_TEMP, &status);
+
+    if (ret < 0)
+
+       printf("ioctl error\n"); //print error message on screen
+#endif
+
+    ret = read(fd, buffer, sizeof(int));
+    printf("read data from driver\n");
+    str = QString::number(buffer[0]);
+    ui->pressure0->setPlainText(str);
+    ui->lineEdit_3->setText(QString("20"));
+    printf("Please check Line edit text\n");
+
+
+    //print buffer[0] data to screen.
+    //pressure0->
+
+
+j}
