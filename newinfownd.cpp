@@ -1,3 +1,4 @@
+//Author: Wang Aibin
 #include "newinfownd.h"
 #include "ui_newinfownd.h"
 
