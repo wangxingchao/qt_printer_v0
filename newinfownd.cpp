@@ -98,14 +98,19 @@ void NewInfoWnd::on_buttonBox_clicked(QAbstractButton *button)
     if (ui->comboBox->currentText() == tr("5*7")) {
          printf("selection 5*7\n");
          type = 0;
+	 ui->textEdit->setCurrentFont(QFont("Times New ROman", 9, QFont::Bold));
+    //runStatusMenu->setFont(QFont("wenquanyi",9,3));//ÉèÖÃ×ÖÌå
      } else if (ui->comboBox->currentText() == tr("7*9")){
          printf("selection 7*9\n");
          type = 1;
+	 ui->textEdit->setCurrentFont(QFont("Times New ROman", 13, QFont::Bold));
     } else if (ui->comboBox->currentText() == tr("12*16")){
         printf("selection 12*16\n");
         type = 2;
+	 ui->textEdit->setCurrentFont(QFont("Times New ROman", 18, QFont::Bold));
     } else if (ui->comboBox->currentText() == tr("24*24")){
         printf("selection 24*24\n");
+	 ui->textEdit->setCurrentFont(QFont("Times New ROman", 23, QFont::Bold))
         type = 3;
      } else {
            printf("OTHER selection\n");
