@@ -1,4 +1,3 @@
-//Author: Wang Aibin
 #include "newinfownd.h"
 #include "ui_newinfownd.h"
 
@@ -113,7 +112,7 @@ void NewInfoWnd::on_buttonBox_clicked(QAbstractButton *button)
     printf("current Ascii number %s, length %d\n", ascii, length);
     for (i=0; i < length; i++) {
         printf("Ascii[%d-->%c] = %d\n", i, ascii[i], ascii[i]);
-        write_val = ascii[i] << 8 | type;
+        write_val = type << 8 | ascii[i]; 
 	printf("FPGA: Write ASCII numbers %d to 0x8F address\n", write_val);
         write_data(0x8f, (write_val & 0xFFFF));
     }
@@ -138,4 +137,9 @@ void NewInfoWnd::on_comboBox_2_currentIndexChanged(const QString &arg1)
      lineedit = ui->lineEdit->text();
      lineedit.append(combox);
      ui->lineEdit->setText(lineedit);
+}
+
+void NewInfoWnd::on_pushButton_clicked()
+{
+    ui->lineEdit->setText(" ");
 }

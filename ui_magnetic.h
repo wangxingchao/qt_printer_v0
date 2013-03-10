@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'magnetic.ui'
 **
-** Created: Sun Jan 27 15:40:01 2013
+** Created: Sat Feb 23 12:40:52 2013
 **      by: Qt User Interface Compiler version 4.7.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -259,7 +259,7 @@ public:
         magnetic->setCentralWidget(centralwidget);
         menubar = new QMenuBar(magnetic);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 638, 23));
+        menubar->setGeometry(QRect(0, 0, 638, 27));
         magnetic->setMenuBar(menubar);
         statusbar = new QStatusBar(magnetic);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -351,7 +351,7 @@ public:
          << QApplication::translate("magnetic", "enable", 0, QApplication::UnicodeUTF8)
         );
         label_8->setText(QApplication::translate("magnetic", "8 \345\216\213\345\212\233\346\263\265", 0, QApplication::UnicodeUTF8));
-        lineEdit_21->setText(QApplication::translate("magnetic", "100", 0, QApplication::UnicodeUTF8));
+        lineEdit_21->setText(QApplication::translate("magnetic", "4100", 0, QApplication::UnicodeUTF8));
         label_27->setText(QApplication::translate("magnetic", "23 \345\216\213\345\212\233\346\263\265\345\274\200\345\205\263", 0, QApplication::UnicodeUTF8));
         comboBox_13->clear();
         comboBox_13->insertItems(0, QStringList()
@@ -359,7 +359,7 @@ public:
          << QApplication::translate("magnetic", "enable", 0, QApplication::UnicodeUTF8)
         );
         label_28->setText(QApplication::translate("magnetic", "24 \347\234\237\347\251\272\346\263\265", 0, QApplication::UnicodeUTF8));
-        lineEdit_22->setText(QApplication::translate("magnetic", "100", 0, QApplication::UnicodeUTF8));
+        lineEdit_22->setText(QApplication::translate("magnetic", "2100", 0, QApplication::UnicodeUTF8));
         toolBar->setWindowTitle(QApplication::translate("magnetic", "toolBar", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 

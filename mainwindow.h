@@ -53,6 +53,8 @@ private slots:
     void print();
 
     void runlog();
+    void TurnOnBoard();
+    void TurnOffBoard();
 
     void lightStatus();
     void otherStatus();

@@ -24,6 +24,7 @@ private slots:
     void on_buttonBox_clicked(QAbstractButton *button);
     void on_comboBox_2_activated(const QString &arg1);
     void on_comboBox_2_currentIndexChanged(const QString &arg1);
+    void on_pushButton_clicked();
 };
 
 #endif // NEWINFOWND_H

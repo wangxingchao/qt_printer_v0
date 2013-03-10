@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Sun Jan 27 15:40:23 2013
+** Created: Sat Feb 23 16:39:14 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-      18,   14, // methods
+      20,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -40,17 +40,19 @@ static const uint qt_meta_data_MainWindow[] = {
       92,   11,   11,   11, 0x08,
      101,   11,   11,   11, 0x08,
      115,   11,   11,   11, 0x08,
-     129,   11,   11,   11, 0x08,
-     143,   11,   11,   11, 0x08,
-     153,   11,   11,   11, 0x08,
-     166,   11,   11,   11, 0x08,
-     175,   11,   11,   11, 0x08,
-     189,   11,   11,   11, 0x08,
-     199,   11,   11,   11, 0x08,
-     210,   11,   11,   11, 0x08,
-     224,   11,   11,   11, 0x08,
+     130,   11,   11,   11, 0x08,
+     144,   11,   11,   11, 0x08,
+     158,   11,   11,   11, 0x08,
+     172,   11,   11,   11, 0x08,
+     182,   11,   11,   11, 0x08,
+     195,   11,   11,   11, 0x08,
+     204,   11,   11,   11, 0x08,
+     218,   11,   11,   11, 0x08,
+     228,   11,   11,   11, 0x08,
      239,   11,   11,   11, 0x08,
-     250,   11,   11,   11, 0x08,
+     253,   11,   11,   11, 0x08,
+     268,   11,   11,   11, 0x08,
+     279,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -59,11 +61,12 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "MainWindow\0\0data,len\0"
     "WriteDatagram(const char*,qint32)\0"
     "ShowRunStatus()\0initConfig()\0print()\0"
-    "runlog()\0lightStatus()\0otherStatus()\0"
-    "penYinParam()\0newifno()\0SysGeneral()\0"
-    "UseMan()\0maintainMan()\0mainWnd()\0"
-    "jetSatus()\0shieldCheck()\0openSytleSet()\0"
-    "magnetic()\0counter()\0"
+    "runlog()\0TurnOnBoard()\0TurnOffBoard()\0"
+    "lightStatus()\0otherStatus()\0penYinParam()\0"
+    "newifno()\0SysGeneral()\0UseMan()\0"
+    "maintainMan()\0mainWnd()\0jetSatus()\0"
+    "shieldCheck()\0openSytleSet()\0magnetic()\0"
+    "counter()\0"
 };
 
 const QMetaObject MainWindow::staticMetaObject = {
@@ -100,22 +103,24 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 2: initConfig(); break;
         case 3: print(); break;
         case 4: runlog(); break;
-        case 5: lightStatus(); break;
-        case 6: otherStatus(); break;
-        case 7: penYinParam(); break;
-        case 8: newifno(); break;
-        case 9: SysGeneral(); break;
-        case 10: UseMan(); break;
-        case 11: maintainMan(); break;
-        case 12: mainWnd(); break;
-        case 13: jetSatus(); break;
-        case 14: shieldCheck(); break;
-        case 15: openSytleSet(); break;
-        case 16: magnetic(); break;
-        case 17: counter(); break;
+        case 5: TurnOnBoard(); break;
+        case 6: TurnOffBoard(); break;
+        case 7: lightStatus(); break;
+        case 8: otherStatus(); break;
+        case 9: penYinParam(); break;
+        case 10: newifno(); break;
+        case 11: SysGeneral(); break;
+        case 12: UseMan(); break;
+        case 13: maintainMan(); break;
+        case 14: mainWnd(); break;
+        case 15: jetSatus(); break;
+        case 16: shieldCheck(); break;
+        case 17: openSytleSet(); break;
+        case 18: magnetic(); break;
+        case 19: counter(); break;
         default: ;
         }
-        _id -= 18;
+        _id -= 20;
     }
     return _id;
 }

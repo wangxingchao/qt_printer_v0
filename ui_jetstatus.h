@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'jetstatus.ui'
 **
-** Created: Sun Jan 27 15:40:01 2013
+** Created: Sat Feb 23 12:59:07 2013
 **      by: Qt User Interface Compiler version 4.7.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -22,9 +22,7 @@
 #include <QtGui/QLineEdit>
 #include <QtGui/QMainWindow>
 #include <QtGui/QMenuBar>
-#include <QtGui/QPushButton>
 #include <QtGui/QStatusBar>
-#include <QtGui/QTextEdit>
 #include <QtGui/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -65,8 +63,6 @@ public:
     QLabel *label_39;
     QLineEdit *lineEdit_10;
     QDialogButtonBox *jetbutton;
-    QPushButton *pushButton;
-    QTextEdit *pressure0;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -79,7 +75,7 @@ public:
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         groupBox = new QGroupBox(centralwidget);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
-        groupBox->setGeometry(QRect(60, 50, 341, 151));
+        groupBox->setGeometry(QRect(60, 20, 341, 151));
         label = new QLabel(groupBox);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(40, 40, 71, 16));
@@ -100,7 +96,7 @@ public:
         lineEdit_6->setGeometry(QRect(180, 100, 113, 20));
         groupBox_2 = new QGroupBox(centralwidget);
         groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
-        groupBox_2->setGeometry(QRect(60, 230, 701, 161));
+        groupBox_2->setGeometry(QRect(60, 210, 691, 141));
         label_5 = new QLabel(groupBox_2);
         label_5->setObjectName(QString::fromUtf8("label_5"));
         label_5->setGeometry(QRect(40, 30, 41, 16));
@@ -151,7 +147,7 @@ public:
         lineEdit_33->setGeometry(QRect(530, 120, 113, 20));
         groupBox_6 = new QGroupBox(centralwidget);
         groupBox_6->setObjectName(QString::fromUtf8("groupBox_6"));
-        groupBox_6->setGeometry(QRect(420, 50, 341, 151));
+        groupBox_6->setGeometry(QRect(410, 20, 341, 151));
         label_3 = new QLabel(groupBox_6);
         label_3->setObjectName(QString::fromUtf8("label_3"));
         label_3->setGeometry(QRect(40, 40, 71, 16));
@@ -172,14 +168,8 @@ public:
         lineEdit_10->setGeometry(QRect(180, 100, 113, 20));
         jetbutton = new QDialogButtonBox(centralwidget);
         jetbutton->setObjectName(QString::fromUtf8("jetbutton"));
-        jetbutton->setGeometry(QRect(600, 410, 156, 23));
+        jetbutton->setGeometry(QRect(300, 180, 156, 23));
         jetbutton->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
-        pushButton = new QPushButton(centralwidget);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(140, 430, 75, 23));
-        pressure0 = new QTextEdit(centralwidget);
-        pressure0->setObjectName(QString::fromUtf8("pressure0"));
-        pressure0->setGeometry(QRect(290, 420, 104, 71));
         Jetstatus->setCentralWidget(centralwidget);
         menubar = new QMenuBar(Jetstatus);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -234,12 +224,6 @@ public:
         );
         label_4->setText(QApplication::translate("Jetstatus", "\345\226\267\345\230\2642\345\242\250\347\272\277\351\200\237\345\272\246\357\274\232", 0, QApplication::UnicodeUTF8));
         label_39->setText(QApplication::translate("Jetstatus", "\345\226\267\345\230\2642\345\242\250\347\202\271\346\243\200\346\265\213\357\274\232", 0, QApplication::UnicodeUTF8));
-        pushButton->setText(QApplication::translate("Jetstatus", "GetData", 0, QApplication::UnicodeUTF8));
-        pressure0->setHtml(QApplication::translate("Jetstatus", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Show Pressure</p></body></html>", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };
