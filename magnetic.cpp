@@ -154,7 +154,7 @@ magnetic::magnetic(QWidget *parent) :
     if (fd < 0)
           printf("open error\n");
 
-    //timer->start(5000);
+    timer->start(5000);
 }
 
 magnetic::~magnetic()
