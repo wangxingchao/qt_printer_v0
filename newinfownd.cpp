@@ -1,6 +1,9 @@
 #include "newinfownd.h"
 #include "ui_newinfownd.h"
 
+#include <QTextEdit>
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "qstring.h"
@@ -107,8 +110,8 @@ void NewInfoWnd::on_buttonBox_clicked(QAbstractButton *button)
      } else {
            printf("OTHER selection\n");
     }
-    ascii = ui->textEdit->text().toAscii().constData();
-    length = ui->textEdit->text().length();
+    ascii = ui->textEdit->toPlainText().toAscii().constData();
+    length = ui->textEdit->toPlainText().length();
     printf("current Ascii number %s, length %d\n", ascii, length);
     for (i=0; i < length; i++) {
         printf("Ascii[%d-->%c] = %d\n", i, ascii[i], ascii[i]);
@@ -134,7 +137,7 @@ void NewInfoWnd::on_comboBox_2_currentIndexChanged(const QString &arg1)
     QString combox, lineedit;
      printf("slot index changed\n");
      combox = ui->comboBox_2->currentText();
-     lineedit = ui->textEdit->text();
+     lineedit = ui->textEdit->toPlainText();
      lineedit.append(combox);
      ui->textEdit->setText(lineedit);
 }

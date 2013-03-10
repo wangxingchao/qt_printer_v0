@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'newinfownd.ui'
 **
-** Created: Sat Feb 23 12:40:52 2013
+** Created: Sun Mar 10 16:08:07 2013
 **      by: Qt User Interface Compiler version 4.7.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -23,6 +23,7 @@
 #include <QtGui/QMenuBar>
 #include <QtGui/QPushButton>
 #include <QtGui/QStatusBar>
+#include <QtGui/QTextEdit>
 #include <QtGui/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -34,12 +35,12 @@ public:
     QLabel *label_3;
     QLineEdit *lineEdit_2;
     QComboBox *comboBox;
-    QLineEdit *lineEdit;
     QDialogButtonBox *buttonBox;
     QComboBox *comboBox_2;
     QPushButton *pushButton;
     QLabel *label;
     QLabel *label_2;
+    QTextEdit *textEdit;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -65,10 +66,6 @@ public:
         comboBox = new QComboBox(centralwidget);
         comboBox->setObjectName(QString::fromUtf8("comboBox"));
         comboBox->setGeometry(QRect(210, 10, 91, 22));
-        lineEdit = new QLineEdit(centralwidget);
-        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
-        lineEdit->setGeometry(QRect(90, 80, 441, 81));
-        lineEdit->setFont(font);
         buttonBox = new QDialogButtonBox(centralwidget);
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
         buttonBox->setGeometry(QRect(90, 260, 171, 41));
@@ -89,10 +86,13 @@ public:
         label_2 = new QLabel(centralwidget);
         label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(90, 50, 71, 16));
+        textEdit = new QTextEdit(centralwidget);
+        textEdit->setObjectName(QString::fromUtf8("textEdit"));
+        textEdit->setGeometry(QRect(90, 80, 441, 101));
         NewInfoWnd->setCentralWidget(centralwidget);
         menubar = new QMenuBar(NewInfoWnd);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 800, 23));
+        menubar->setGeometry(QRect(0, 0, 800, 25));
         NewInfoWnd->setMenuBar(menubar);
         statusbar = new QStatusBar(NewInfoWnd);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -118,7 +118,6 @@ public:
          << QApplication::translate("NewInfoWnd", "24*24", 0, QApplication::UnicodeUTF8)
          << QApplication::translate("NewInfoWnd", "32*32", 0, QApplication::UnicodeUTF8)
         );
-        lineEdit->setText(QApplication::translate("NewInfoWnd", "hello raquojet!", 0, QApplication::UnicodeUTF8));
         comboBox_2->clear();
         comboBox_2->insertItems(0, QStringList()
          << QApplication::translate("NewInfoWnd", "A", 0, QApplication::UnicodeUTF8)
