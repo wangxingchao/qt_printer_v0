@@ -389,11 +389,11 @@ void MainWindow::jetSatus()
 /* FIXME: Use Proper Register to turn off/on */
 void MainWindow::TurnOnBoard()
 {
-	write_data(0x3, 1);
+	write_data(0x01, 1);
 }
 void MainWindow::TurnOffBoard()
 {
-	write_data(0x3, 0);
+	write_data(0x02, 1);
 }
 
 void MainWindow::openSytleSet()
