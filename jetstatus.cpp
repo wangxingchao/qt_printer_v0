@@ -110,38 +110,4 @@ void Jetstatus::on_jetbutton_clicked(QAbstractButton *button)
 void Jetstatus::on_pushButton_clicked()
 {
     /* read tempture */
-#if 0
-    QString str;
-int j;
-#if 1 
-    ret = ioctl(fd, FPGA_READ_TEMP, &status);
-
-    if (ret < 0)
-       printf("ioctl error\n"); //print error message on screen
-    printf("IOCTL Ok: Status = %x\n", status);
-#endif
-
-#if 0
-for (j=0; j<3; j++) {
-	printf("buffer[%d]: 0x%x\n",j,buffer[j]);
-}
-#endif
-    ret = read(fd, buffer, sizeof(int));
-    printf("read temp data from driver %x\n", buffer[0]&0xff);
-    str = QString::number(buffer[0]&0xff);
-    //ui->pressure0->setText(str);
-    ui->lineEdit_3->setText(str); //tempreture
-    ret = ioctl(fd, FPGA_READ_PREESURE, &status);
-    if (ret < 0)
-       printf("ioctl error when read pressure data\n"); //print error message on screen
-    ret = ioctl(fd, 0x4, &status);
-    ret = read(fd, buffer, sizeof(int));
-    printf("read pressure data from driver %x\n", buffer[0]&0xff);
-    str = QString::number(buffer[0]&0xff);
-    ui->lineEdit->setText(str);
-    printf("Please check Line edit text\n");
-#endif
-	//update_data();
-//    timer->start(1000);
-
 }
