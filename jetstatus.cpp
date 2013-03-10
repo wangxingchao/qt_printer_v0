@@ -86,14 +86,25 @@ Jetstatus::~Jetstatus()
 * Offset Addr: 0x03 <== Change Later
 * Note: Maybe there's new map between CMD <==> Selection
 */
-#define PENZUI_ADDR     0x03
+#define PENZUI_ON    0xE1
+#define PENZUI_OFF     0xE2
+/* Note: 
+ * Enable INK Line, write 0x1 to 0xE1.
+ * Disable INK Line, write 0x1 t0 0xE2.
+ * */
 void Jetstatus::on_jetbutton_clicked(QAbstractButton *button)
 {
     int i = 0;
     int ret;
     i = ui->comboBox->currentIndex();
+    /* TODO: Use Array to detect address */
     printf("Button Click: Combox selection number %d\n", i);
-    write_data(PENZUI_ADDR, i);
+    if (i == 0x0)
+	    write_data(PENZUI_OFF, 1);
+    else if (i == 0x1)
+	    write_data(PENZUI_ON, 1);
+    else
+	    printf("Need More options here\n");
 }
 
 void Jetstatus::on_pushButton_clicked()
