@@ -107,8 +107,8 @@ void NewInfoWnd::on_buttonBox_clicked(QAbstractButton *button)
      } else {
            printf("OTHER selection\n");
     }
-    ascii = ui->lineEdit->text().toAscii().constData();
-    length = ui->lineEdit->text().length();
+    ascii = ui->textEdit->text().toAscii().constData();
+    length = ui->textEdit->text().length();
     printf("current Ascii number %s, length %d\n", ascii, length);
     for (i=0; i < length; i++) {
         printf("Ascii[%d-->%c] = %d\n", i, ascii[i], ascii[i]);
@@ -134,12 +134,12 @@ void NewInfoWnd::on_comboBox_2_currentIndexChanged(const QString &arg1)
     QString combox, lineedit;
      printf("slot index changed\n");
      combox = ui->comboBox_2->currentText();
-     lineedit = ui->lineEdit->text();
+     lineedit = ui->textEdit->text();
      lineedit.append(combox);
-     ui->lineEdit->setText(lineedit);
+     ui->textEdit->setText(lineedit);
 }
 
 void NewInfoWnd::on_pushButton_clicked()
 {
-    ui->lineEdit->setText(" ");
+    ui->textEdit->setText(" ");
 }
