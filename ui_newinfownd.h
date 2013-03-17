@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'newinfownd.ui'
 **
-** Created: Sun Mar 10 16:08:07 2013
+** Created: Sun Mar 10 18:25:41 2013
 **      by: Qt User Interface Compiler version 4.7.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -139,6 +139,11 @@ public:
         pushButton->setText(QApplication::translate("NewInfoWnd", "clean", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("NewInfoWnd", "\345\255\227\345\275\242\351\200\211\346\213\251", 0, QApplication::UnicodeUTF8));
         label_2->setText(QApplication::translate("NewInfoWnd", "\345\233\276\345\275\242\351\200\211\346\213\251", 0, QApplication::UnicodeUTF8));
+        textEdit->setHtml(QApplication::translate("NewInfoWnd", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:26pt; font-weight:600;\">Hello, World!</span></p></body></html>", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

@@ -3,7 +3,10 @@
 
 #include <QTextEdit>
 #include <QFont>
+#include "fpgadrv.h"
 
+
+#if 0
 #include <stdio.h>
 #include <stdlib.h>
 #include "qstring.h"
@@ -62,6 +65,7 @@ static int write_data(int address, int value)
  printf("FPGA_WRITE_DATA: write value %d to addr %d\n", value, address); 
 return ret;
 }
+#endif
 
 NewInfoWnd::NewInfoWnd(QWidget *parent) :
     MainWindow(parent),
