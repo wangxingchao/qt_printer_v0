@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'sysgenwnd.ui'
 **
-** Created: Sun Mar 24 15:18:19 2013
+** Created: Sun Mar 24 18:21:43 2013
 **      by: Qt User Interface Compiler version 4.7.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

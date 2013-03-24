@@ -247,7 +247,7 @@ void magnetic::update_timer()
 	QTime time = QTime::currentTime();
 	QString text = time.toString("hh:mm");
   //  	ui->pressure0->setText(text);
-	//update_data();
+	update_data();
 }
 
 magnetic::magnetic(QWidget *parent) :
