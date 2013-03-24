@@ -1,4 +1,5 @@
 #include "magnetic.h"
+#include "fpgadrv.h"
 #include "ui_magnetic.h"
 #include "qstring.h"
 #include "qtimer.h"
@@ -76,7 +77,6 @@ int get_decode(const char *chinese)
 	}
 	      return 1;
 }
-
 
 void magnetic:: update_data()
 {
