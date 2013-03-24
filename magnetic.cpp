@@ -77,7 +77,6 @@ int get_decode(const char *chinese)
 	      return 1;
 }
 
-
 void magnetic:: update_data()
 {
     QString str;

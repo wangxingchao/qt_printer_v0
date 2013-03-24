@@ -18,17 +18,17 @@
 #define FPGA_READ_DATA 0x12
 #define FPGA_WRITE_DATA 0x13
 
-static char *devname = "/dev/s3c-fpga";
-static int fd;
-static int ret;
-static int buffer[3] = {0xaa55, 0xccbb, 0x1234};
+char *devname = "/dev/s3c-fpga";
+int fd;
+int ret;
+int buffer[3] = {0xaa55, 0xccbb, 0x1234};
 
-static int status;
-static int address=0;
-static int tmp_data;
-static int enable;
+int status;
+int address=0;
+int tmp_data;
+int enable;
 
-static int get_data(int address)
+int get_data(int address)
 {
    int ret;
     ret  = ioctl(fd, FPGA_ADDR, &address);
@@ -43,7 +43,7 @@ static int get_data(int address)
 }
 
 
-static int write_data(int address, int value)
+int write_data(int address, int value)
 {
 	int ret;
     ret  = ioctl(fd, FPGA_ADDR, &address);
