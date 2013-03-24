@@ -200,10 +200,6 @@ void magnetic::update_timer()
 	QString text = time.toString("hh:mm");
   //  	ui->pressure0->setText(text);
 	//update_data();
-	printf("##################\n");
-	get_decode("下");
-	printf("##################\n");
-
 }
 
 magnetic::magnetic(QWidget *parent) :
@@ -220,6 +216,9 @@ magnetic::magnetic(QWidget *parent) :
           printf("open error\n");
 
     timer->start(5000);
+    printf("##################\n");
+    get_decode("下");
+    printf("##################\n");
 }
 
 magnetic::~magnetic()
