@@ -88,6 +88,10 @@ Jetstatus::~Jetstatus()
 */
 #define PENZUI_ON    0xE1
 #define PENZUI_OFF     0xE2
+#define PENZUI_GENGXIN     0xE3
+#define PENZUI_WENDING     0xE4
+#define PENZUI_RONGJI     0xE5
+#define PENZUI_DATONG     0xE6
 /* Note: 
  * Enable INK Line, write 0x1 to 0xE1.
  * Disable INK Line, write 0x1 t0 0xE2.
@@ -103,6 +107,14 @@ void Jetstatus::on_jetbutton_clicked(QAbstractButton *button)
 	    write_data(PENZUI_OFF, 1);
     else if (i == 0x1)
 	    write_data(PENZUI_ON, 1);
+    else if (i == 0x2)
+	    write_data(PENZUI_GENGXIN, 1);
+    else if (i == 0x3)
+	    write_data(PENZUI_WENDING, 1);
+    else if (i == 0x4)
+	    write_data(PENZUI_RONGJI, 1);
+    else if (i == 0x5)
+	    write_data(PENZUI_DATONG, 1);
     else
 	    printf("Need More options here\n");
 }
