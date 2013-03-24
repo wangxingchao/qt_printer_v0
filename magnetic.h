@@ -11,6 +11,7 @@
 #include <fcntl.h>
 #include <errno.h>
 
+#if 0
 #define FPGA_TEST 0x0
 #define FPGA_READ_TEMP 0x1
 #define FPGA_READ_PREESURE 0x2
@@ -57,6 +58,7 @@ int write_data(int address, int value)
  printf("FPGA_WRITE_DATA: write value %d to addr %d\n", value, address); 
 return ret;
 }
+#endif
 
 namespace Ui {
     class magnetic;

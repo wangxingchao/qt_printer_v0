@@ -1,4 +1,5 @@
 #include "magnetic.h"
+#include "fpgadrv.h"
 #include "ui_magnetic.h"
 #include "qstring.h"
 #include "qtimer.h"
