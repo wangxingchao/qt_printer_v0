@@ -101,12 +101,15 @@ void MainWindow::ShowRunStatus()
 
 void MainWindow::createMenus()
 {
-    PmjMenu = menuBar()->addMenu(tr("ink-jet(&p)"));
-  QTextCodec *codec = QTextCodec::codecForName("unifont");
+    //PmjMenu = menuBar()->addMenu(tr("喷吗机(&p)"));
+  //QTextCodec *codec = QTextCodec::codecForName("unifont");
+  QTextCodec *codec = QTextCodec::codecForName("UTF-8");
+  QTextCodec *codec_cn = QTextCodec::codecForName("GB2312");
     QTextCodec::setCodecForLocale(codec);
     QTextCodec::setCodecForCStrings(codec);
     QTextCodec::setCodecForTr(codec);
 
+    PmjMenu = menuBar()->addMenu(tr("喷吗机(&p)"));
     PmjMenu->addAction(onAct);
     PmjMenu->addAction(offAct);
     PmjMenu->addAction(quickOnAct);
@@ -115,31 +118,31 @@ void MainWindow::createMenus()
     PmjMenu->addAction(inkCloseAct);
     PmjMenu->addAction(openSytleSetAct);
 
-    runStatusMenu = menuBar()->addMenu(tr("runStatus(&R)"));
+    runStatusMenu = menuBar()->addMenu(tr("运行状态(&R)"));
     //runStatusMenu->setFont(QFont("wenquanyi",9,3));//ÉèÖÃ×ÖÌå
     runStatusMenu->addAction(lightStatusAct);
     runStatusMenu->addAction(jetStatusAct);
 
-    paramMenu = menuBar()->addMenu(tr("parameter(&P)"));
+    paramMenu = menuBar()->addMenu(tr("喷印参数(&P)"));
     //runparamMenu->setFont(QFont("wenquanyi",9,3));//ÉèÖÃ×ÖÌå
     paramMenu->addAction(penyinAct);
 
-    infoEditMenu = menuBar()->addMenu(tr("infoEdit(&E)"));
+    infoEditMenu = menuBar()->addMenu(tr("信息编辑(&E)"));
     //infoEditMenu->setFont(QFont("wenquanyi",9,3));//ÉèÖÃ×ÖÌå
     infoEditMenu->addAction(infoEditAct);
 
 
-    dayMaintainMenu = menuBar()->addMenu(tr("dayMaintain(&D)"));
+    dayMaintainMenu = menuBar()->addMenu(tr("日常维护(&D)"));
     //helpMenu->setFont(QFont("wenquanyi",9,3));//ÉèÖÃ×ÖÌå
     dayMaintainMenu->addAction(jetRunStatusAct);
     dayMaintainMenu->addAction(magneticValveAct);
     dayMaintainMenu->addAction(shieldCheckAct);
-    inkChannelClearMenu = dayMaintainMenu->addMenu(tr("ChannelClear(&W)"));
+    inkChannelClearMenu = dayMaintainMenu->addMenu(tr("管路维护(&W)"));
     inkChannelClearMenu->addAction(clearJetAct);
     inkChannelClearMenu->addAction(clearChokeAct);
     inkChannelClearMenu->addAction(clearMachineAct);
 
-    dataRecordMenu = menuBar()->addMenu(tr("Record(&R)"));
+    dataRecordMenu = menuBar()->addMenu(tr("状态记录(&R)"));
     dataRecordMenu->addAction(versionInfoAct);
     dataRecordMenu->addAction(counterAct);
     dataRecordMenu->addAction(initConfAct);
@@ -147,7 +150,7 @@ void MainWindow::createMenus()
     dataRecordMenu->addAction(errorLogAct);
 
 
-    mainMenu =  menuBar()->addMenu(tr("main(&M)"));
+    mainMenu =  menuBar()->addMenu(tr("主界面(&M)"));
     //mainMenu->setFont(QFont("wenquanyi",9,3));//ÉèÖÃ×ÖÌå
     mainMenu->addAction(mainWndAct);
 
@@ -155,38 +158,48 @@ void MainWindow::createMenus()
 
 void MainWindow::createActions()
 {
-    onAct = new QAction(tr("on"), this);
-    offAct = new QAction(tr("off"), this);
-    quickOnAct = new QAction(tr("quickOn"), this);
-    quickOffAct = new QAction(tr("quickOff"), this);
-    inkOpenAct = new QAction(tr("inkOpen"), this);
-    inkCloseAct = new QAction(tr("inkClose"), this);
-    openSytleSetAct = new QAction(tr("penSytleSet"), this);
+    QTextCodec *codec = QTextCodec::codecForName("UTF-8");
+    QTextCodec *codec_cn = QTextCodec::codecForName("GB2312");
+    QTextCodec::setCodecForLocale(codec);
+    QTextCodec::setCodecForCStrings(codec);
+    QTextCodec::setCodecForTr(codec);
 
-    lightStatusAct = new QAction(tr("light"), this);
-    jetStatusAct = new QAction(tr("jetStatus"), this);
+    onAct = new QAction(tr("开机"), this);
+    offAct = new QAction(tr("关机"), this);
+    quickOnAct = new QAction(tr("快速开机"), this);
+    quickOffAct = new QAction(tr("快速关机"), this);
+    inkOpenAct = new QAction(tr("开墨线"), this);
+    inkCloseAct = new QAction(tr("关墨线"), this);
+    openSytleSetAct = new QAction(tr("开机设置"), this);
 
-    penyinAct = new QAction(tr("penyin"), this);
+    lightStatusAct = new QAction(tr("指示灯"), this);
+    jetStatusAct = new QAction(tr("机器运行状态"), this);
 
-    infoEditAct = new QAction(tr("infoEdit"), this);
+    penyinAct = new QAction(tr("喷印参数"), this);
 
-    jetRunStatusAct = new QAction(tr("jetRun"), this);
-    magneticValveAct = new QAction(tr("magnetic"), this);
-    shieldCheckAct = new QAction(tr("shieldCheck"), this);
-    clearJetAct = new QAction(tr("clearJet"), this);
-    clearChokeAct = new QAction(tr("clearChoke"), this);
-    clearMachineAct = new QAction(tr("clearMachine"), this);
+    infoEditAct = new QAction(tr("新建信息"), this);
 
-    versionInfoAct = new QAction(tr("versionInfo"), this);
-    counterAct = new QAction(tr("counter"), this);
-    initConfAct = new QAction(tr("initCon"), this);
-    jetStatusRecordAct = new QAction(tr("jetStatusRecord"), this);
-    errorLogAct = new QAction(tr("errorLog"), this);
+    jetRunStatusAct = new QAction(tr("运行状态"), this);
+    magneticValveAct = new QAction(tr("电磁阀测试及粘度检测"), this);
+    shieldCheckAct = new QAction(tr("屏蔽检测"), this);
+    clearJetAct = new QAction(tr("喷嘴清洗"), this);
+    clearChokeAct = new QAction(tr("喉管清洗"), this);
+    clearMachineAct = new QAction(tr("整机清洗"), this);
 
-    mainWndAct = new QAction(tr("main"), this);
+    versionInfoAct = new QAction(tr("版本信息"), this);
+    counterAct = new QAction(tr("产品计数器"), this);
+    initConfAct = new QAction(tr("初始化设置"), this);
+    jetStatusRecordAct = new QAction(tr("喷头状态记录"), this);
+    errorLogAct = new QAction(tr("故障信息"), this);
+
+    mainWndAct = new QAction(tr("主界面"), this);
 
     connect(onAct, SIGNAL(triggered()), this, SLOT(TurnOnBoard()));
     connect(offAct, SIGNAL(triggered()), this, SLOT(TurnOffBoard()));
+ 
+    /* Quick power on/off switch */
+    connect(quickOnAct, SIGNAL(triggered()), this, SLOT(TurnquickOnBoard()));
+    connect(quickOffAct, SIGNAL(triggered()), this, SLOT(TurnquickOffBoard()));
 
     connect(jetStatusAct, SIGNAL(triggered()), this, SLOT(jetSatus()));
 
@@ -395,6 +408,15 @@ void MainWindow::TurnOffBoard()
 {
 	write_data(0x02, 1);
 }
+void MainWindow::TurnquickOnBoard()
+{
+	write_data(0x03, 1);
+}
+void MainWindow::TurnquickOffBoard()
+{
+	write_data(0x04, 1);
+}
+
 
 void MainWindow::openSytleSet()
 {

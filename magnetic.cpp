@@ -1,7 +1,5 @@
 #include "magnetic.h"
 #include "ui_magnetic.h"
-#include <stdio.h>
-#include <stdlib.h>
 #include "qstring.h"
 #include "qtimer.h"
 
@@ -11,9 +9,73 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 #include <QtGui>
-
+#include <qtextcodec.h>
+#include <QByteArray>
 QTimer *timer;
+
+QTextCodec* gbk_codec;
+//QPainter* qp = new QPainter();
+QString ChineseAndEnglish(const char*ChineseString)
+{
+	gbk_codec = QTextCodec::codecForName("UTF-8");
+	return gbk_codec->toUnicode(ChineseString); 
+}
+
+QString ChineseAndEnglish(const char*ChineseString,const char* _codeName)
+{
+        gbk_codec = QTextCodec::codecForName(_codeName);
+        return gbk_codec->toUnicode(ChineseString);
+}
+QByteArray ChineseAndEnglish2(QString unicodeString,const char* _codeName)
+{        
+	gbk_codec = QTextCodec::codecForName(_codeName);
+	return gbk_codec->fromUnicode(unicodeString);
+}
+
+int get_decode(const char *chinese)
+{
+	QString txt1;
+	QByteArray txt2;
+	uint value;
+	bool ok;
+
+	txt1 = ChineseAndEnglish(chinese);
+	txt2 = ChineseAndEnglish2(txt1, "GB2312");
+
+	    char* name;
+	    name = txt2.data();
+	    value = txt1.toUInt(&ok, 10);
+	    //printf("%s%s %x\n",chinese,"The chinese word", value);
+ 	    printf("%s%s",chinese,"的区位码是：");
+	    int i=strlen(name);
+            int j=0;
+	    int l=0,r=0;
+	   for(j=0; j<i-1; j+=2)
+	      {
+	          r=(int)name[j];
+	          l=(int)name[j+1];
+	          if(r<0){
+	             r=256+r-160;
+	          }else{
+	             r=r-160;
+	         }
+	        if(l<0){
+	          l=256+l-160;
+	         }else{
+	           l=l-160;
+	         }
+	        if(j==0){
+	         printf("%02d%02d",abs(r),abs(l));
+	       }else{
+	        printf(",%02d%02d",abs(r),abs(l));
+	     }
+	}
+	      return 1;
+}
 
 
 void magnetic:: update_data()
@@ -137,7 +199,10 @@ void magnetic::update_timer()
 	QTime time = QTime::currentTime();
 	QString text = time.toString("hh:mm");
   //  	ui->pressure0->setText(text);
-	update_data();
+	//update_data();
+	printf("##################\n");
+	get_decode("下");
+	printf("##################\n");
 
 }
 
@@ -154,7 +219,7 @@ magnetic::magnetic(QWidget *parent) :
     if (fd < 0)
           printf("open error\n");
 
-    //timer->start(5000);
+    timer->start(5000);
 }
 
 magnetic::~magnetic()
