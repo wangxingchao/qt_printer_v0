@@ -57,6 +57,8 @@ private slots:
     void TurnOffBoard();
     void TurnquickOnBoard();
     void TurnquickOffBoard();
+    void TurnclearMachineBoard();
+    void TurnclearChokeBoard();
 
     void lightStatus();
     void otherStatus();

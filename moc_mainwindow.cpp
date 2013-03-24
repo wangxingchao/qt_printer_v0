@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Sun Mar 24 16:20:19 2013
+** Created: Sun Mar 24 17:46:31 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-      22,   14, // methods
+      24,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -43,18 +43,20 @@ static const uint qt_meta_data_MainWindow[] = {
      130,   11,   11,   11, 0x08,
      149,   11,   11,   11, 0x08,
      169,   11,   11,   11, 0x08,
-     183,   11,   11,   11, 0x08,
-     197,   11,   11,   11, 0x08,
-     211,   11,   11,   11, 0x08,
-     221,   11,   11,   11, 0x08,
-     234,   11,   11,   11, 0x08,
+     193,   11,   11,   11, 0x08,
+     215,   11,   11,   11, 0x08,
+     229,   11,   11,   11, 0x08,
      243,   11,   11,   11, 0x08,
      257,   11,   11,   11, 0x08,
      267,   11,   11,   11, 0x08,
-     278,   11,   11,   11, 0x08,
-     292,   11,   11,   11, 0x08,
-     307,   11,   11,   11, 0x08,
-     318,   11,   11,   11, 0x08,
+     280,   11,   11,   11, 0x08,
+     289,   11,   11,   11, 0x08,
+     303,   11,   11,   11, 0x08,
+     313,   11,   11,   11, 0x08,
+     324,   11,   11,   11, 0x08,
+     338,   11,   11,   11, 0x08,
+     353,   11,   11,   11, 0x08,
+     364,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -65,6 +67,7 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "ShowRunStatus()\0initConfig()\0print()\0"
     "runlog()\0TurnOnBoard()\0TurnOffBoard()\0"
     "TurnquickOnBoard()\0TurnquickOffBoard()\0"
+    "TurnclearMachineBoard()\0TurnclearChokeBoard()\0"
     "lightStatus()\0otherStatus()\0penYinParam()\0"
     "newifno()\0SysGeneral()\0UseMan()\0"
     "maintainMan()\0mainWnd()\0jetSatus()\0"
@@ -110,22 +113,24 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 6: TurnOffBoard(); break;
         case 7: TurnquickOnBoard(); break;
         case 8: TurnquickOffBoard(); break;
-        case 9: lightStatus(); break;
-        case 10: otherStatus(); break;
-        case 11: penYinParam(); break;
-        case 12: newifno(); break;
-        case 13: SysGeneral(); break;
-        case 14: UseMan(); break;
-        case 15: maintainMan(); break;
-        case 16: mainWnd(); break;
-        case 17: jetSatus(); break;
-        case 18: shieldCheck(); break;
-        case 19: openSytleSet(); break;
-        case 20: magnetic(); break;
-        case 21: counter(); break;
+        case 9: TurnclearMachineBoard(); break;
+        case 10: TurnclearChokeBoard(); break;
+        case 11: lightStatus(); break;
+        case 12: otherStatus(); break;
+        case 13: penYinParam(); break;
+        case 14: newifno(); break;
+        case 15: SysGeneral(); break;
+        case 16: UseMan(); break;
+        case 17: maintainMan(); break;
+        case 18: mainWnd(); break;
+        case 19: jetSatus(); break;
+        case 20: shieldCheck(); break;
+        case 21: openSytleSet(); break;
+        case 22: magnetic(); break;
+        case 23: counter(); break;
         default: ;
         }
-        _id -= 22;
+        _id -= 24;
     }
     return _id;
 }

@@ -201,6 +201,9 @@ void MainWindow::createActions()
     connect(quickOnAct, SIGNAL(triggered()), this, SLOT(TurnquickOnBoard()));
     connect(quickOffAct, SIGNAL(triggered()), this, SLOT(TurnquickOffBoard()));
 
+    connect(clearChokeAct, SIGNAL(triggered()), this, SLOT(TurnclearChokeBoard()));
+    connect(clearMachineAct, SIGNAL(triggered()), this, SLOT(TurnclearMachineBoard()));
+
     connect(jetStatusAct, SIGNAL(triggered()), this, SLOT(jetSatus()));
 
     connect(jetRunStatusAct, SIGNAL(triggered()), this, SLOT(jetSatus()));
@@ -415,6 +418,14 @@ void MainWindow::TurnquickOnBoard()
 void MainWindow::TurnquickOffBoard()
 {
 	write_data(0x04, 1);
+}
+void MainWindow::TurnclearMachineBoard()
+{
+	write_data(0x0a, 1);
+}
+void MainWindow::TurnclearChokeBoard()
+{
+	write_data(0x0b, 1);
 }
 
 
