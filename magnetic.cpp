@@ -63,6 +63,124 @@ static int write_data(int address, int value)
 return ret;
 }
 
+//Register definition for M25p32 flash
+//diagram:
+//   M25p32 flash ---> FPGA ---> CPU
+//   1. cpu calculate size and data buffer
+//   2. cpu tell fpga the target address of flash chip
+//   3. cpu tell the data length in transfer
+//   4. cpu write data to 0x85 repeately
+//   5. cpu tell fpga to sync data to flash chip
+//
+#define WADDR_MSB	0x81
+#define WOP_CMD_MASK	0xFF0000
+#define WADDR_MASK	0xFF
+
+#define WADDR_LSB	0x82
+
+#define WDATA_LEN_MSB	0x83
+#define WDATA_LEN_LSB	0x84
+#define WADDR_REPEAT	0x85
+
+#define RADDR_MSB	0x87
+#define ROP_CMD_MASK	0xFF00
+#define RADDR_MASK	0xFF
+
+#define RADDR_LSB	0x88
+#define RDATA_LEN_MSB	0x89
+#define RDATA_LEN_LSB	0x8A
+#define RADDR_REPEAT	0x8B
+
+#define WR_SYNC		0x8C //0x8006 for Write sync; 0x8004 for Read sync
+#define DATA_TYPE	0x8F
+
+#define WRITE_TYPE	0x2
+#define READ_TYPE	0x3
+//5*7: 0 
+//12 * 10: 1
+//16*16 :2
+//18*18: 3
+//
+//
+//read data from addreess into buffer,  
+static int read_buffer(int address, char *buffer, int size)
+{
+	char h_addr, opcmd;
+	int pos = 0, len = size;
+	short value;
+	//set write address
+	write_data(RADDR_LSB, address&0xFFFF);
+	
+	h_addr = (address>>16) & 0xFF;
+	opcmd = READ_TYPE;
+	write_data(RADDR_MSB, (opcmd << 8) | h_addr);
+
+	write_data(RDATA_LEN_MSB, size >> 16);
+	write_data(RDATA_LEN_LSB, size & 0xFFFF);
+
+	//flush the data
+	write_data(WR_SYNC, 0x8004);
+
+	udelay(size);
+
+	while (len > 0) {
+		value = get_data(RADDR_REPEAT);
+		buffer[pos] = value & 0xFF;
+		buffer[pos+1] = value >> 8;
+		pos += 2;
+		len -= 2;
+		if (len == 1) {
+			//write last byte manually
+			value = get_data(RADDR_REPEAT);
+			buffer[pos] = value & 0xFF;
+			len = 0;
+		}
+	}
+	
+}
+
+//This API would write size data from offset to the address
+//len should be less than 256 bytes
+static int write_buffer(int address, char *buffer, int size)
+{
+	char h_addr, opcmd;
+	int pos = 0, len = size;
+	short value;
+	//set write address
+	write_data(WADDR_LSB, address&0xFFFF);
+	
+	h_addr = (address>>16) & 0xFF;
+	opcmd = WRITE_TYPE;
+	write_data(WADDR_MSB, (opcmd << 8) | h_addr);
+
+	write_data(WDATA_LEN_MSB, size >> 16);
+	write_data(WDATA_LEN_LSB, size & 0xFFFF);
+
+	while (len > 0) {
+		value = buffer[pos] | (buffer[pos+1] << 8);
+		write_data(WADDR_REPEAT, value);
+		pos += 2;
+		len -= 2;
+		if (len == 1) {
+			//write last byte manually
+			write_data(WADDR_REPEAT, buffer[pos]);
+			len = 0;
+		}
+	}
+	
+	//flush the data
+	write_data(WR_SYNC, 0x8006);
+}
+
+//download character libray
+//
+
+void download_lib(void)
+{
+	char *path = "/sdcard/";
+
+}
+
 QTimer *timer;
 
 QTextCodec* gbk_codec;
