@@ -137,6 +137,7 @@ static int read_buffer(int address, char *buffer, int size)
 		}
 	}
 	
+	return 0;
 }
 
 //This API would write size data from offset to the address
@@ -170,6 +171,7 @@ static int write_buffer(int address, char *buffer, int size)
 	
 	//flush the data
 	write_data(WR_SYNC, 0x8006);
+	return 0;
 }
 
 //download character libray
@@ -177,8 +179,27 @@ static int write_buffer(int address, char *buffer, int size)
 
 void download_lib(void)
 {
-	char *path = "/sdcard/";
+	struct stat st;
+	int ziku_fd;
+	int size;
+	char *path = "/sdcard/HZK16";
+	char read_buf[256];
+	int fpga_addr;
+	int err;
 
+    	ziku_fd = open(path, O_RDWR);
+	stat(path, &st);
+	size = st.st_size;
+
+	printf("Ziku %s size %d\n", path, size);
+
+	//for test only, write one buffer 
+	read(ziku_fd, read_buf, sizeof(read_buf));
+	fpga_addr = 0;
+
+	err = write_buffer(fpga_addr, read_buf, 256);
+	if (err < 0)
+		printf("write error\n");
 }
 
 QTimer *timer;
@@ -406,118 +427,6 @@ int value;
     fprintf(stderr,"5: %s.",ui->lineEdit_13->text().toAscii().constData());
     fprintf(stderr,"6: %s.",ui->lineEdit_14->text().toAscii().constData());
 
-// timer->start(1000);
-//item 4
-#if 0
-    if (ui->comboBox_11->currentText() == tr("enable")) {
-        printf("Item 4 setting ENABLE\n");
-        enabled = 1;
-    } else {
-        printf("Item 4 setting DISABLE\n");
-        enabled = 0;
-    }
-    write_data(0x44, enabled);
-
-	//item 5
-   if (ui->comboBox_12->currentText() == tr("enable")) {
-        printf("Item 5 setting ENABLE\n");
-        enabled = 1;
-    } else {
-        printf("Item 5 setting DISABLE\n");
-        enabled = 0;
-    }
-	 write_data(0x45, enabled);
-
-	//item 6
-   if (ui->comboBox_6->currentText() == tr("enable")) {
-        printf("Item 6 setting ENABLE\n");
-        enabled = 1;
-    } else {
-        printf("Item 6 setting DISABLE\n");
-        enabled = 0;
-    }
-	 write_data(0x46, enabled);
-	
-    //item 7
-   if (ui->comboBox_10->currentText() == tr("enable")) {
-        printf("Item 7 setting ENABLE\n");
-        enabled = 1;
-    } else {
-        printf("Item 7 setting DISABLE\n");
-        enabled = 0;
-    }
-	 write_data(0x43, enabled);
-
-     //item 14
-    if (ui->comboBox_7->currentText() == tr("enable")) {
-         printf("Item 14 setting ENABLE\n");
-         enabled = 1;
-     } else {
-         printf("Item 14 setting DISABLE\n");
-         enabled = 0;
-     }
-      write_data(0x4B, enabled);
-   
-     //item 15
-    if (ui->comboBox_4->currentText() == tr("enable")) {
-         printf("Item 15 setting ENABLE\n");
-         enabled = 1;
-     } else {
-         printf("Item 15 setting DISABLE\n");
-         enabled = 0;
-     }
-      write_data(0x47, enabled);
-
-     //item 19
-    if (ui->comboBox_5->currentText() == tr("enable")) {
-         printf("Item 19 setting ENABLE\n");
-         enabled = 1;
-     } else {
-         printf("Item 19 setting DISABLE\n");
-         enabled = 0;
-     }
-      write_data(0x48, enabled);
-
-     //item 20
-    if (ui->comboBox_8->currentText() == tr("enable")) {
-         printf("Item 20 setting ENABLE\n");
-         enabled = 1;
-     } else {
-         printf("Item 20 setting DISABLE\n");
-         enabled = 0;
-     }
-         write_data(0x49, enabled);
-
-     //item 21
-    if (ui->comboBox_9->currentText() == tr("enable")) {
-         printf("Item 21 setting ENABLE\n");
-         enabled = 1;
-     } else {
-         printf("Item 21 setting DISABLE\n");
-         enabled = 0;
-     }
-      write_data(0x4A, enabled);
-
-     //item 22
-    if (ui->comboBox_2->currentText() == tr("enable")) {
-         printf("Item 22 setting ENABLE\n");
-         enabled = 1;
-     } else {
-         printf("Item 22 setting DISABLE\n");
-         enabled = 0;
-     }
-      write_data(0x41, enabled);
-
-     //item 23
-    if (ui->comboBox_13->currentText() == tr("enable")) {
-         printf("Item 23 setting ENABLE\n");
-         enabled = 1;
-     } else {
-         printf("Item 23 setting DISABLE\n");
-         enabled = 0;
-     }
-      write_data(0x42, enabled);
-#endif
 //item 8 test, for pressure
     value = ui->lineEdit_21->text().toInt();
        printf("Item 8 setting value 0x%d\n", value);
@@ -687,4 +596,7 @@ void magnetic::on_buttonBox_clicked(QAbstractButton *button)
            printf("Item 25 setting value 0x%d\n", value);
        if (value > 22 || value < 100)
            write_data(0x51, value);
+
+       //download character library for test
+       download_lib();
 }
