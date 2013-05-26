@@ -43,7 +43,7 @@ static int get_data(int address)
     printf("FPGA_READ_DATA: addr 0x%x --> value 0x%x\n",address, tmp_data);  
     if (ret < 0)
       printf("ioctl error\n"); //print error message on screen
-//    printf("IOCTL Ok: Status = %x\n", status);
+    printf("IOCTL Ok: Status = %x\n", status);
     return tmp_data;
 }
 
@@ -95,7 +95,7 @@ return ret;
 #define DATA_TYPE	0x8F
 
 #define WRITE_TYPE	0x2
-#define READ_TYPE	0x3
+#define READ_TYPE	0x03//	0x9F
 //5*7: 0 
 //12 * 10: 1
 //16*16 :2
@@ -121,7 +121,7 @@ static int read_buffer(int address, char *buffer, int size)
 	//flush the data
 	write_data(WR_SYNC, 0x8004);
 
-	udelay(size);
+	usleep(size);
 
 	while (len > 0) {
 		value = get_data(RADDR_REPEAT);
@@ -170,36 +170,102 @@ static int write_buffer(int address, char *buffer, int size)
 	}
 	
 	//flush the data
-	write_data(WR_SYNC, 0x8006);
+	write_data(WR_SYNC, 0xc006);
 	return 0;
 }
 
 //download character libray
 //
 
+void spi_erase(int address)
+{
+	//erash the flash chip before write(For test)
+	char h_addr;
+	
+	write_data(WADDR_LSB, address & 0xFFFF);
+	
+	h_addr = (address >> 16) & 0xFF;
+	write_data(WADDR_MSB, (0xd8 << 8) | h_addr);
+
+	write_data(WR_SYNC, 0xc006);
+
+	usleep(2000000);
+}
+
 void download_lib(void)
 {
 	struct stat st;
 	int ziku_fd;
-	int size;
+	unsigned long size, pos;
 	char *path = "/sdcard/HZK16";
 	char read_buf[256];
-	int fpga_addr;
+	char read_back[256];
+	int flash_addr;
 	int err;
+	int rounds, i, chunk, left;
 
-    	ziku_fd = open(path, O_RDWR);
 	stat(path, &st);
 	size = st.st_size;
 
-	printf("Ziku %s size %d\n", path, size);
+	printf("Ziku %s size %lu\n", path, size);
 
 	//for test only, write one buffer 
-	read(ziku_fd, read_buf, sizeof(read_buf));
-	fpga_addr = 0;
+    	ziku_fd = open(path, O_RDWR);
 
-	err = write_buffer(fpga_addr, read_buf, 256);
+#if 1 
+//	read(ziku_fd, read_buf, sizeof(read_buf));
+	memset(read_buf, 0x5a, sizeof(read_buf));	
+	flash_addr = 0x10000; //write from set0
+
+	spi_erase(flash_addr);	
+	printf("erase flash\n");
+
+	err = write_buffer(flash_addr, read_buf, 256);
 	if (err < 0)
 		printf("write error\n");
+
+	usleep(10000);
+
+	err = read_buffer(flash_addr, read_back, 256);
+	if (err < 0)
+		printf("write error\n");
+
+	for (i=0; i<256; i++) {
+		if (read_buf[i] != read_back[i])
+			printf("No Match at %d [%d]--[%d]\n",i, read_buf[i], read_back[i]);
+	}
+#endif
+
+#if 0
+	pos = 0;
+	flash_addr = 0x10000;
+	chunk = sizeof(read_buf);
+	rounds = size / chunk;
+
+	for (i=0; i<rounds; i++) {
+		err = read(ziku_fd, read_buf, sizeof(read_buf));
+		if (err < 0)
+			printf("read ziku file error\n");
+
+		err = write_buffer(flash_addr + pos, read_buf, chunk);
+		if (err < 0)
+			printf("write flash error\n");
+		pos += chunk;
+		lseek(ziku_fd, pos, SEEK_SET);
+	}
+
+	left = size - rounds * chunk;
+	//write left bytes
+	if (left > 0) { 
+		printf("write left bytes %d\n", left);
+		err = read(ziku_fd, read_buf, left);
+		if (err < 0)
+			printf("read ziku file error\n");
+		err = write_buffer(flash_addr + pos, read_buf, chunk);
+		if (err < 0)
+			printf("write flash error\n");
+	}
+#endif
 }
 
 QTimer *timer;
@@ -402,7 +468,7 @@ magnetic::magnetic(QWidget *parent) :
     if (fd < 0)
           printf("open error\n");
 
-    timer->start(5000);
+    //timer->start(5000);
     printf("##################\n");
     get_decode("下");
     printf("##################\n");
