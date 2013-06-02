@@ -123,10 +123,11 @@ static int read_buffer(int address, char *buffer, int size)
 
 	usleep(size);
 
+//	value = get_data(RADDR_REPEAT);
 	while (len > 0) {
 		value = get_data(RADDR_REPEAT);
-		buffer[pos+1] = value & 0xFF;
-		buffer[pos] = value >> 8;
+		buffer[pos] = value & 0xFF;
+		buffer[pos+1] = value >> 8;
 		pos += 2;
 		len -= 2;
 		if (len == 1) {
@@ -189,14 +190,15 @@ void spi_erase(int address)
 	usleep(2000000);
 }
 
+char *path = "/sdcard/HZK16";
+char read_buf[256];
+char read_back[256];
 void magnetic::download_lib(void)
 {
 	struct stat st;
 	int ziku_fd;
 	unsigned long size, pos;
 	char *path = "/sdcard/HZK16";
-	char read_buf[256];
-	char read_back[256];
 	int flash_addr;
 	int err;
 	int rounds, i,j, chunk, left;
@@ -207,6 +209,7 @@ void magnetic::download_lib(void)
 	stat(path, &st);
 	size = st.st_size;
 
+	flash_addr = 0x10000; //write from set0
 	printf("Ziku %s size %lu\n", path, size);
 	erase_rounds = size/0x10000;
 	printf("erase %d rounds\n", erase_rounds);
@@ -226,12 +229,13 @@ void magnetic::download_lib(void)
      printf("FPGA TEST: Step %d\n", op_step);
 
 	for (i = 0; i < erase_rounds+1; i++) {
-//		spi_erase(flash_addr + i*0x10000);
+		spi_erase(flash_addr + i*0x10000);
 	}
 
 	//for test only, write one buffer 
     	ziku_fd = open(path, O_RDWR);
 
+#if 0
 #if 1 
 	switch (op_step) {
 	case 0:
@@ -239,11 +243,16 @@ void magnetic::download_lib(void)
 		printf("erase flash\n");
 		break;
 	case 1:
+#if 0 
 		for (i = 0; i < sizeof(read_buf); i++)
 			read_buf[i] = i;
+#else
 	//	memset(read_buf, 0x5a, sizeof(read_buf));	
-		flash_addr = 0x10000; //write from set0
 
+		err = read(ziku_fd, read_buf, sizeof(read_buf));
+		if (err < 0)
+			printf("read ziku file error\n");
+#endif
         	err = write_buffer(flash_addr, read_buf, 256);
         	if (err < 0)
         		printf("write error\n");
@@ -265,10 +274,11 @@ void magnetic::download_lib(void)
 		break;
 	}
 #endif
+#endif
 
 	//spi_erase(flash_addr);	
 	//printf("erase flash\n");
-#if 0 
+#if 1 
 	pos = 0;
 	flash_addr = 0x10000;
 	chunk = sizeof(read_buf);
