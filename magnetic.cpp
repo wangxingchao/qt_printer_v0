@@ -202,6 +202,7 @@ void download_lib(void)
 	int rounds, i,j, chunk, left;
 	int erase_rounds;
 	static int error_count;
+    int op_step;
 
 	stat(path, &st);
 	size = st.st_size;
@@ -209,6 +210,20 @@ void download_lib(void)
 	printf("Ziku %s size %lu\n", path, size);
 	erase_rounds = size/0x10000;
 	printf("erase %d rounds\n", erase_rounds);
+
+    if (ui->comboBox_9->currentText() == tr("Step0")) {
+         printf("Start Step 0\n");
+         op_step = 0;
+     } else if (ui->comboBox_9->currentText() == tr("Step1")) {
+         printf("Start Step 1\n");
+         op_step = 1;
+     } else if (ui->comboBox_9->currentText() == tr("Step2")) {
+        printf("Start Step 2\n");
+        op_step = 2;
+     } else
+        op_step = 3;
+
+     printf("FPGA TEST: Step %d\n", op_step);
 
 	for (i = 0; i < erase_rounds+1; i++) {
 //		spi_erase(flash_addr + i*0x10000);
