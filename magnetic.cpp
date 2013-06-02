@@ -189,7 +189,7 @@ void spi_erase(int address)
 	usleep(2000000);
 }
 
-void download_lib(void)
+void magnetic::download_lib(void)
 {
 	struct stat st;
 	int ziku_fd;
@@ -202,7 +202,7 @@ void download_lib(void)
 	int rounds, i,j, chunk, left;
 	int erase_rounds;
 	static int error_count;
-    int op_step;
+    	int op_step = -1;
 
 	stat(path, &st);
 	size = st.st_size;
@@ -233,26 +233,36 @@ void download_lib(void)
     	ziku_fd = open(path, O_RDWR);
 
 #if 1 
-	spi_erase(flash_addr);	
-	printf("erase flash\n");
-	for (i = 0; i < sizeof(read_buf); i++)
-		read_buf[i] = i;
-//	memset(read_buf, 0x5a, sizeof(read_buf));	
-	flash_addr = 0x10000; //write from set0
+	switch (op_step) {
+	case 0:
+		spi_erase(flash_addr);	
+		printf("erase flash\n");
+		break;
+	case 1:
+		for (i = 0; i < sizeof(read_buf); i++)
+			read_buf[i] = i;
+	//	memset(read_buf, 0x5a, sizeof(read_buf));	
+		flash_addr = 0x10000; //write from set0
 
-	err = write_buffer(flash_addr, read_buf, 256);
-	if (err < 0)
-		printf("write error\n");
-
-	usleep(10000);
-
-	err = read_buffer(flash_addr, read_back, 256);
-	if (err < 0)
-		printf("write error\n");
-
-	for (i=0; i<256; i++) {
-		if (read_buf[i] != read_back[i])
-			printf("No Match at 0x%x [0x%x]--[0x%x]\n",i, read_buf[i], read_back[i]);
+        	err = write_buffer(flash_addr, read_buf, 256);
+        	if (err < 0)
+        		printf("write error\n");
+        
+        	usleep(10000);
+		break;
+	case 2:
+		err = read_buffer(flash_addr, read_back, 256);
+        	if (err < 0)
+        		printf("write error\n");
+        
+        	for (i=0; i<256; i++) {
+        		if (read_buf[i] != read_back[i])
+        			printf("No Match at 0x%x [0x%x]--[0x%x]\n",i, read_buf[i], read_back[i]);
+            	}
+		break;
+	default:
+		printf("Invalid operation command!\n");
+		break;
 	}
 #endif
 

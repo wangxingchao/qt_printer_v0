@@ -51,6 +51,7 @@ private:
     Ui::magnetic *ui;
 protected:
     void update_data(void);
+    void download_lib(void);
 
 };
 
