@@ -747,6 +747,49 @@
      <string>2100</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label_31">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>230</y>
+      <width>91</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>调试步骤</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboBox_9">
+    <property name="geometry">
+     <rect>
+      <x>540</x>
+      <y>230</y>
+      <width>91</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>Step0</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Step1</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Step2</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Step3</string>
+     </property>
+    </item>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -754,7 +797,7 @@
      <x>0</x>
      <y>0</y>
      <width>638</width>
-     <height>27</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
