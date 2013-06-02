@@ -40,10 +40,10 @@ static int get_data(int address)
     if (ret < 0)
 	  printf("ioctl error when setting FPGA_ADDR\n");
    ret = ioctl(fd, FPGA_READ_DATA, &tmp_data);
-    printf("FPGA_READ_DATA: addr 0x%x --> value 0x%x\n",address, tmp_data);  
+  //  printf("FPGA_READ_DATA: addr 0x%x --> value 0x%x\n",address, tmp_data);  
     if (ret < 0)
       printf("ioctl error\n"); //print error message on screen
-    printf("IOCTL Ok: Status = %x\n", status);
+ //   printf("IOCTL Ok: Status = %x\n", status);
     return tmp_data;
 }
 
@@ -59,7 +59,7 @@ static int write_data(int address, int value)
     if (ret < 0)
        printf("ioctl error\n"); //print error message on screen
 //    printf("IOCTL Ok: Status = %x\n", status);
- printf("FPGA_WRITE_DATA: write value %d to addr %d\n", value, address); 
+// printf("FPGA_WRITE_DATA: write value %d to addr %d\n", value, address); 
 return ret;
 }
 
@@ -125,8 +125,8 @@ static int read_buffer(int address, char *buffer, int size)
 
 	while (len > 0) {
 		value = get_data(RADDR_REPEAT);
-		buffer[pos] = value & 0xFF;
-		buffer[pos+1] = value >> 8;
+		buffer[pos+1] = value & 0xFF;
+		buffer[pos] = value >> 8;
 		pos += 2;
 		len -= 2;
 		if (len == 1) {
@@ -174,9 +174,6 @@ static int write_buffer(int address, char *buffer, int size)
 	return 0;
 }
 
-//download character libray
-//
-
 void spi_erase(int address)
 {
 	//erash the flash chip before write(For test)
@@ -202,23 +199,31 @@ void download_lib(void)
 	char read_back[256];
 	int flash_addr;
 	int err;
-	int rounds, i, chunk, left;
+	int rounds, i,j, chunk, left;
+	int erase_rounds;
+	static int error_count;
 
 	stat(path, &st);
 	size = st.st_size;
 
 	printf("Ziku %s size %lu\n", path, size);
+	erase_rounds = size/0x10000;
+	printf("erase %d rounds\n", erase_rounds);
+
+	for (i = 0; i < erase_rounds+1; i++) {
+//		spi_erase(flash_addr + i*0x10000);
+	}
 
 	//for test only, write one buffer 
     	ziku_fd = open(path, O_RDWR);
 
 #if 1 
-//	read(ziku_fd, read_buf, sizeof(read_buf));
-	memset(read_buf, 0x5a, sizeof(read_buf));	
-	flash_addr = 0x10000; //write from set0
-
 	spi_erase(flash_addr);	
 	printf("erase flash\n");
+	for (i = 0; i < sizeof(read_buf); i++)
+		read_buf[i] = i;
+//	memset(read_buf, 0x5a, sizeof(read_buf));	
+	flash_addr = 0x10000; //write from set0
 
 	err = write_buffer(flash_addr, read_buf, 256);
 	if (err < 0)
@@ -232,17 +237,21 @@ void download_lib(void)
 
 	for (i=0; i<256; i++) {
 		if (read_buf[i] != read_back[i])
-			printf("No Match at %d [%d]--[%d]\n",i, read_buf[i], read_back[i]);
+			printf("No Match at 0x%x [0x%x]--[0x%x]\n",i, read_buf[i], read_back[i]);
 	}
 #endif
 
-#if 0
+	//spi_erase(flash_addr);	
+	//printf("erase flash\n");
+#if 0 
 	pos = 0;
 	flash_addr = 0x10000;
 	chunk = sizeof(read_buf);
 	rounds = size / chunk;
+	memset(read_buf, 0, sizeof(read_buf));
+	memset(read_back, 0, sizeof(read_back));
 
-	for (i=0; i<rounds; i++) {
+	for (j=0; j<rounds; j++) {
 		err = read(ziku_fd, read_buf, sizeof(read_buf));
 		if (err < 0)
 			printf("read ziku file error\n");
@@ -250,6 +259,18 @@ void download_lib(void)
 		err = write_buffer(flash_addr + pos, read_buf, chunk);
 		if (err < 0)
 			printf("write flash error\n");
+    
+        	usleep(10000);
+        
+        	err = read_buffer(flash_addr + pos, read_back, 256);
+        	if (err < 0)
+        		printf("write error\n");
+        
+        	for (i=0; i<256; i++) {
+        		if (read_buf[i] != read_back[i])
+				error_count++;
+        			//printf("No Match at %d [%d]--[%d]\n",i, read_buf[i], read_back[i]);
+            	}
 		pos += chunk;
 		lseek(ziku_fd, pos, SEEK_SET);
 	}
@@ -266,6 +287,7 @@ void download_lib(void)
 			printf("write flash error\n");
 	}
 #endif
+       printf("error count %d\n", error_count);
 }
 
 QTimer *timer;
