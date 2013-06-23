@@ -52,6 +52,7 @@ private:
 protected:
     void update_data(void);
     void download_lib(void);
+    void u1sram_test(void);
 
 };
 

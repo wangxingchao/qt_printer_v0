@@ -93,22 +93,75 @@ void u1sram_write(int address, int value)
 	write_data(U1SRAM_W_START, 1);
 }
 
-void u1sram_test(void)
+void magnetic::u1sram_test(void)
 {
 	int value, tmp;
-	int i, addr;
+	int i, addr; //address gotten from UI
+    	int op_step = -1;
+
+    if (ui->comboBox_9->currentText() == tr("Step0")) {
+         printf("Start Step 0\n");
+         op_step = 0;
+     } else if (ui->comboBox_9->currentText() == tr("Step1")) {
+         printf("Start Step 1\n");
+         op_step = 1;
+     } else if (ui->comboBox_9->currentText() == tr("Step2")) {
+        printf("Start Step 2\n");
+        op_step = 2;
+     } else
+        op_step = 3;
+
 	tmp = 0xaa55;
-	for (i = 0; i < 10; i++) {
-		addr = i + 0x10000;
+     printf("U1SRAM TEST: Step %d\n", op_step);
+
+	switch (op_step) {
+	case 0: //write to address
+	for (i = 0; i < 101; i++) {
+		addr = i + 0x30000;
+		tmp += i;
+		u1sram_write(addr, tmp);
+	}
+		break;
+	case 1: //read value for verification
+    	for (i = 0; i < 101; i++) {
+    		addr = i + 0x30000;
+    		tmp += i;
+    		value = u1sram_read(addr);
+    
+    		if ((value&0xFFFF) != tmp)
+    			printf("u1sram test: donot match at addr %x, val:[%x]--[%x]\n",
+    					addr, value, tmp);
+    		else {
+    			if ((i%10) == 0)
+    				printf("u1sram test: read value %x from addr %x\n", value, addr);
+    		}
+    	}
+		break;
+	case 2:
+		printf("Invalid operation command!\n");
+		break;
+	default:
+		printf("Invalid operation command!\n");
+		break;
+	}
+#if 0
+
+	for (i = 0; i < 101; i++) {
+		addr = i + 0x30000;
 		tmp += i;
 		u1sram_write(addr, tmp);
 		usleep(100000);
 		value = u1sram_read(addr);
 
-		if (value != tmp)
+		if (value&0xFFFF != tmp)
 			printf("u1sram test: donot match at addr %x, val:[%x]--[%x]\n",
 					addr, value, tmp);
+		else {
+			if (i%10 == 0)
+				printf("u1sram test: read value %x from addr %x\n", value, addr);
+		}
 	}
+#endif
 }
 
 //Register definition for M25p32 flash
