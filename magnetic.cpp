@@ -99,13 +99,13 @@ void magnetic::u1sram_test(void)
 	int i, addr; //address gotten from UI
     	int op_step = -1;
 
-    if (ui->comboBox_9->currentText() == tr("Step0")) {
+    if (ui->comboBox_14->currentText() == tr("Step0")) {
          printf("Start Step 0\n");
          op_step = 0;
-     } else if (ui->comboBox_9->currentText() == tr("Step1")) {
+     } else if (ui->comboBox_14->currentText() == tr("Step1")) {
          printf("Start Step 1\n");
          op_step = 1;
-     } else if (ui->comboBox_9->currentText() == tr("Step2")) {
+     } else if (ui->comboBox_14->currentText() == tr("Step2")) {
         printf("Start Step 2\n");
         op_step = 2;
      } else
@@ -294,6 +294,90 @@ void spi_erase(int address)
 char *path = "/sdcard/HZK16";
 char read_buf[256];
 char read_back[256];
+void magnetic::download_lib_step(void)
+{
+    struct stat st;
+    int ziku_fd;
+    unsigned long size, pos;
+    char *path = "/sdcard/HZK16";
+    int flash_addr;
+    int err;
+    int rounds, i,j, chunk, left;
+    int erase_rounds;
+    static int error_count;
+        int op_step = -1;
+
+    stat(path, &st);
+    size = st.st_size;
+
+    flash_addr = 0x10000; //write from set0
+    printf("Ziku %s size %lu\n", path, size);
+    erase_rounds = size/0x10000;
+    printf("erase %d rounds\n", erase_rounds);
+
+    if (ui->comboBox_9->currentText() == tr("Step0")) {
+         printf("Start Step 0\n");
+         op_step = 0;
+     } else if (ui->comboBox_9->currentText() == tr("Step1")) {
+         printf("Start Step 1\n");
+         op_step = 1;
+     } else if (ui->comboBox_9->currentText() == tr("Step2")) {
+        printf("Start Step 2\n");
+        op_step = 2;
+     } else
+        op_step = 3;
+
+     printf("FPGA TEST: Step %d\n", op_step);
+
+    for (i = 0; i < erase_rounds+1; i++) {
+        spi_erase(flash_addr + i*0x10000);
+    }
+
+    //for test only, write one buffer
+        ziku_fd = open(path, O_RDWR);
+
+
+#if 1
+    switch (op_step) {
+    case 0:
+        spi_erase(flash_addr);
+        printf("erase flash\n");
+        break;
+    case 1:
+#if 0
+        for (i = 0; i < sizeof(read_buf); i++)
+            read_buf[i] = i;
+#else
+    //	memset(read_buf, 0x5a, sizeof(read_buf));
+
+        err = read(ziku_fd, read_buf, sizeof(read_buf));
+        if (err < 0)
+            printf("read ziku file error\n");
+#endif
+            err = write_buffer(flash_addr, read_buf, 256);
+            if (err < 0)
+                printf("write error\n");
+
+            usleep(10000);
+        break;
+    case 2:
+        err = read_buffer(flash_addr, read_back, 256);
+            if (err < 0)
+                printf("write error\n");
+
+            for (i=0; i<256; i++) {
+                if (read_buf[i] != read_back[i])
+                    printf("No Match at 0x%x [0x%x]--[0x%x]\n",i, read_buf[i], read_back[i]);
+                }
+        break;
+    default:
+        printf("Invalid operation command!\n");
+        break;
+    }
+#endif
+
+}
+
 void magnetic::download_lib(void)
 {
 	struct stat st;
@@ -315,20 +399,6 @@ void magnetic::download_lib(void)
 	erase_rounds = size/0x10000;
 	printf("erase %d rounds\n", erase_rounds);
 
-    if (ui->comboBox_9->currentText() == tr("Step0")) {
-         printf("Start Step 0\n");
-         op_step = 0;
-     } else if (ui->comboBox_9->currentText() == tr("Step1")) {
-         printf("Start Step 1\n");
-         op_step = 1;
-     } else if (ui->comboBox_9->currentText() == tr("Step2")) {
-        printf("Start Step 2\n");
-        op_step = 2;
-     } else
-        op_step = 3;
-
-     printf("FPGA TEST: Step %d\n", op_step);
-
 	for (i = 0; i < erase_rounds+1; i++) {
 		spi_erase(flash_addr + i*0x10000);
 	}
@@ -336,50 +406,6 @@ void magnetic::download_lib(void)
 	//for test only, write one buffer 
     	ziku_fd = open(path, O_RDWR);
 
-#if 0
-#if 1 
-	switch (op_step) {
-	case 0:
-		spi_erase(flash_addr);	
-		printf("erase flash\n");
-		break;
-	case 1:
-#if 0 
-		for (i = 0; i < sizeof(read_buf); i++)
-			read_buf[i] = i;
-#else
-	//	memset(read_buf, 0x5a, sizeof(read_buf));	
-
-		err = read(ziku_fd, read_buf, sizeof(read_buf));
-		if (err < 0)
-			printf("read ziku file error\n");
-#endif
-        	err = write_buffer(flash_addr, read_buf, 256);
-        	if (err < 0)
-        		printf("write error\n");
-        
-        	usleep(10000);
-		break;
-	case 2:
-		err = read_buffer(flash_addr, read_back, 256);
-        	if (err < 0)
-        		printf("write error\n");
-        
-        	for (i=0; i<256; i++) {
-        		if (read_buf[i] != read_back[i])
-        			printf("No Match at 0x%x [0x%x]--[0x%x]\n",i, read_buf[i], read_back[i]);
-            	}
-		break;
-	default:
-		printf("Invalid operation command!\n");
-		break;
-	}
-#endif
-#endif
-
-	//spi_erase(flash_addr);	
-	//printf("erase flash\n");
-#if 1 
 	pos = 0;
 	flash_addr = 0x10000;
 	chunk = sizeof(read_buf);
@@ -422,7 +448,7 @@ void magnetic::download_lib(void)
 		if (err < 0)
 			printf("write flash error\n");
 	}
-#endif
+
        printf("error count %d\n", error_count);
 }
 
@@ -820,9 +846,20 @@ void magnetic::on_buttonBox_clicked(QAbstractButton *button)
            printf("Item 25 setting value 0x%d\n", value);
        if (value > 22 || value < 100)
            write_data(0x51, value);
+ }
 
-       //download character library for test
-       download_lib();
-       //printf("download lib disabled, u1sram test\n");
-       u1sram_test();
+void magnetic::on_pushButton_clicked()
+{
+        u1sram_test();
+}
+
+void magnetic::on_pushButton_3_clicked()
+{
+    //download character library for test
+    download_lib();
+}
+
+void magnetic::on_pushButton_2_clicked()
+{
+    download_lib_step();
 }

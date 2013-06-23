@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>638</width>
-    <height>399</height>
+    <width>722</width>
+    <height>413</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -757,7 +757,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>调试步骤</string>
+     <string>字库调试步骤</string>
     </property>
    </widget>
    <widget class="QComboBox" name="comboBox_9">
@@ -790,13 +790,95 @@
      </property>
     </item>
    </widget>
+   <widget class="QLabel" name="label_32">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>270</y>
+      <width>91</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>SRAM调试步骤</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboBox_14">
+    <property name="geometry">
+     <rect>
+      <x>540</x>
+      <y>270</y>
+      <width>91</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>Step0</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Step1</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Step2</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Step3</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>290</y>
+      <width>51</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>测试s</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_2">
+    <property name="geometry">
+     <rect>
+      <x>590</x>
+      <y>250</y>
+      <width>51</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>测试z</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_3">
+    <property name="geometry">
+     <rect>
+      <x>540</x>
+      <y>250</y>
+      <width>51</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>下载字库</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>638</width>
+     <width>722</width>
      <height>21</height>
     </rect>
    </property>

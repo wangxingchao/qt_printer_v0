@@ -47,11 +47,18 @@ private slots:
   void on_buttonBox_clicked(QAbstractButton *button);
 
 
+  void on_pushButton_clicked();
+
+  void on_pushButton_3_clicked();
+
+  void on_pushButton_2_clicked();
+
 private:
     Ui::magnetic *ui;
 protected:
     void update_data(void);
     void download_lib(void);
+    void download_lib_step(void);
     void u1sram_test(void);
 
 };
