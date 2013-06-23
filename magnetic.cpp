@@ -329,15 +329,15 @@ void magnetic::download_lib_step(void)
 
      printf("FPGA TEST: Step %d\n", op_step);
 
+#if 0
     for (i = 0; i < erase_rounds+1; i++) {
         spi_erase(flash_addr + i*0x10000);
     }
+#endif
 
     //for test only, write one buffer
         ziku_fd = open(path, O_RDWR);
 
-
-#if 1
     switch (op_step) {
     case 0:
         spi_erase(flash_addr);
@@ -348,8 +348,7 @@ void magnetic::download_lib_step(void)
         for (i = 0; i < sizeof(read_buf); i++)
             read_buf[i] = i;
 #else
-    //	memset(read_buf, 0x5a, sizeof(read_buf));
-
+        printf("write ziku\n");
         err = read(ziku_fd, read_buf, sizeof(read_buf));
         if (err < 0)
             printf("read ziku file error\n");
@@ -361,6 +360,7 @@ void magnetic::download_lib_step(void)
             usleep(10000);
         break;
     case 2:
+        printf("read ziku for verification\n");
         err = read_buffer(flash_addr, read_back, 256);
             if (err < 0)
                 printf("write error\n");
@@ -374,7 +374,6 @@ void magnetic::download_lib_step(void)
         printf("Invalid operation command!\n");
         break;
     }
-#endif
 
 }
 
