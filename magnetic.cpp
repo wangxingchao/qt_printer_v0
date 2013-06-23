@@ -63,6 +63,54 @@ static int write_data(int address, int value)
 return ret;
 }
 
+//Add function to test sram read/write
+#define U1SRAM_WH 0xc1
+#define U1SRAM_WL 0xc2
+#define U1SRAM_WDATA 0xc3
+#define U1SRAM_W_START 0xc4
+#define U1SRAM_RH 0xc5
+#define U1SRAM_RL 0xc6
+#define U1SRAM_RDATA 0xc7
+#define U1SRAM_R_START 0xc8
+
+int u1sram_read(int address)
+{
+	int value;
+	write_data(U1SRAM_RH, (address>>16)&0xFFFF);
+	write_data(U1SRAM_RL, address&0xFFFF);
+	write_data(U1SRAM_R_START, 1);
+
+	value = get_data(U1SRAM_RDATA);
+	return value;
+}
+
+void u1sram_write(int address, int value)
+{
+	write_data(U1SRAM_WH, (address>>16)&0xFFFF);
+	write_data(U1SRAM_WL, address&0xFFFF);
+	
+	write_data(U1SRAM_WDATA, value);
+	write_data(U1SRAM_W_START, 1);
+}
+
+void u1sram_test(void)
+{
+	int value, tmp;
+	int i, addr;
+	tmp = 0xaa55;
+	for (i = 0; i < 10; i++) {
+		addr = i + 0x10000;
+		tmp += i;
+		u1sram_write(addr, tmp);
+		usleep(100000);
+		value = u1sram_read(addr);
+
+		if (value != tmp)
+			printf("u1sram test: donot match at addr %x, val:[%x]--[%x]\n",
+					addr, value, tmp);
+	}
+}
+
 //Register definition for M25p32 flash
 //diagram:
 //   M25p32 flash ---> FPGA ---> CPU
@@ -722,4 +770,6 @@ void magnetic::on_buttonBox_clicked(QAbstractButton *button)
 
        //download character library for test
        download_lib();
+       //printf("download lib disabled, u1sram test\n");
+       u1sram_test();
 }
