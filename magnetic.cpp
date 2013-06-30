@@ -104,10 +104,12 @@ void magnetic::u1sram_test(void)
     	int op_step = -1;
 	int count = 0;
 
+#if 0
     	loop_num = ui->lineEdit_24->text().toInt();
          printf("loop num %d\n", loop_num);
 	 if (!loop_num)
 		 loop_num = 1;
+#endif
     if (ui->comboBox_14->currentText() == tr("Step0")) {
          printf("Start Step 0\n");
          op_step = 0;
@@ -872,11 +874,13 @@ void magnetic::on_pushButton_3_clicked()
 {
 	QString str;
     //download character library for test
-    //download_lib();
+    download_lib();
+#if 0
     if(loop_num++ > 16)
 	loop_num = 1;
     str = QString::number(loop_num);
     ui->lineEdit_24->setText(str);
+#endif
 }
 
 void magnetic::on_pushButton_2_clicked()
