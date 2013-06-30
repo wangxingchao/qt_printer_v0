@@ -32,6 +32,7 @@ static int status;
 static int address=0;
 static int tmp_data;
 static int enable;
+int loop_num = 1;
 
 static int get_data(int address)
 {
@@ -102,7 +103,6 @@ void magnetic::u1sram_test(void)
 	int i, addr; //address gotten from UI
     	int op_step = -1;
 	int count = 0;
-	int loop_num = 1;
 
     	loop_num = ui->lineEdit_24->text().toInt();
          printf("loop num %d\n", loop_num);
@@ -870,8 +870,13 @@ void magnetic::on_pushButton_clicked()
 
 void magnetic::on_pushButton_3_clicked()
 {
+	QString str;
     //download character library for test
-    download_lib();
+    //download_lib();
+    if(loop_num++ > 16)
+	loop_num = 1;
+    str = QString::number(loop_num);
+    ui->lineEdit_24->setText(str);
 }
 
 void magnetic::on_pushButton_2_clicked()
