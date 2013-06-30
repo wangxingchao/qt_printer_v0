@@ -102,7 +102,12 @@ void magnetic::u1sram_test(void)
 	int i, addr; //address gotten from UI
     	int op_step = -1;
 	int count = 0;
+	int loop_num = 1;
 
+    	loop_num = ui->lineEdit_24->text().toInt();
+         printf("loop num %d\n", loop_num);
+	 if (!loop_num)
+		 loop_num = 1;
     if (ui->comboBox_14->currentText() == tr("Step0")) {
          printf("Start Step 0\n");
          op_step = 0;
@@ -120,14 +125,14 @@ void magnetic::u1sram_test(void)
 
 	switch (op_step) {
 	case 0: //write to address
-	for (i = 0; i < 16; i++) {
+	for (i = 0; i < loop_num; i++) {
 		addr = i + 0x80000;
 		value = tmp + i;
 		u1sram_write(addr, value);
 	}
 		break;
 	case 1: //read value for verification
-    	for (i = 0; i < 16; i++) {
+    	for (i = 0; i < loop_num; i++) {
 		count = 100;
     		addr = i + 0x80000;
 		//u1sram_write(addr, tmp+i);
