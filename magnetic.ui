@@ -794,7 +794,7 @@
     <property name="geometry">
      <rect>
       <x>440</x>
-      <y>270</y>
+      <y>280</y>
       <width>91</width>
       <height>16</height>
      </rect>
@@ -807,7 +807,7 @@
     <property name="geometry">
      <rect>
       <x>540</x>
-      <y>270</y>
+      <y>280</y>
       <width>91</width>
       <height>20</height>
      </rect>
@@ -836,8 +836,8 @@
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>570</x>
-      <y>290</y>
+      <x>580</x>
+      <y>300</y>
       <width>51</width>
       <height>23</height>
      </rect>
@@ -849,7 +849,7 @@
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>590</x>
+      <x>630</x>
       <y>250</y>
       <width>51</width>
       <height>23</height>
@@ -864,12 +864,35 @@
      <rect>
       <x>540</x>
       <y>250</y>
-      <width>51</width>
+      <width>61</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
      <string>下载字库</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_24">
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>300</y>
+      <width>81</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_33">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>300</y>
+      <width>61</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>读写次数</string>
     </property>
    </widget>
   </widget>
@@ -879,7 +902,7 @@
      <x>0</x>
      <y>0</y>
      <width>722</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>
