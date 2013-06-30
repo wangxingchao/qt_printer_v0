@@ -80,7 +80,7 @@ int u1sram_read(int address)
 	write_data(U1SRAM_RH, (address>>16)&0xFFFF);
 	write_data(U1SRAM_RL, address&0xFFFF);
 	write_data(U1SRAM_R_START, 1);
-	usleep(100000);
+//	usleep(100000);
 	//printf("Sleep 100ms\n");
 
 	value = get_data(U1SRAM_RDATA);
@@ -94,7 +94,7 @@ void u1sram_write(int address, int value)
 	
 	write_data(U1SRAM_WDATA, value);
 	write_data(U1SRAM_W_START, 1);
-	usleep(100000);
+//	usleep(100000);
 }
 
 void magnetic::u1sram_test(void)
@@ -125,6 +125,7 @@ void magnetic::u1sram_test(void)
  	tmp = 0xaa55;
      	printf("U1SRAM TEST: Step %d\n", op_step);
 
+	loop_num = 100;
 	switch (op_step) {
 	case 0: //write to address
 	for (i = 0; i < loop_num; i++) {
@@ -150,7 +151,7 @@ void magnetic::u1sram_test(void)
     			printf("u1sram test: donot match at addr %x, val:[%x]--[%x]\n",
     					addr, value, (tmp+i));
     		else {
-    		//	if ((i%10) == 0)
+    			if ((i%10) == 0)
     				printf("u1sram test: read value %x from addr %x\n", value, addr);
     		}
     	}
