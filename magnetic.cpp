@@ -79,6 +79,8 @@ int u1sram_read(int address)
 	write_data(U1SRAM_RH, (address>>16)&0xFFFF);
 	write_data(U1SRAM_RL, address&0xFFFF);
 	write_data(U1SRAM_R_START, 1);
+	usleep(100000);
+	//printf("Sleep 100ms\n");
 
 	value = get_data(U1SRAM_RDATA);
 	return value;
@@ -91,6 +93,7 @@ void u1sram_write(int address, int value)
 	
 	write_data(U1SRAM_WDATA, value);
 	write_data(U1SRAM_W_START, 1);
+	usleep(100000);
 }
 
 void magnetic::u1sram_test(void)
@@ -98,6 +101,7 @@ void magnetic::u1sram_test(void)
 	int value, tmp;
 	int i, addr; //address gotten from UI
     	int op_step = -1;
+	int count = 0;
 
     if (ui->comboBox_14->currentText() == tr("Step0")) {
          printf("Start Step 0\n");
@@ -111,28 +115,35 @@ void magnetic::u1sram_test(void)
      } else
         op_step = 3;
 
-	tmp = 0xaa55;
-     printf("U1SRAM TEST: Step %d\n", op_step);
+ 	tmp = 0xaa55;
+     	printf("U1SRAM TEST: Step %d\n", op_step);
 
 	switch (op_step) {
 	case 0: //write to address
-	for (i = 0; i < 101; i++) {
-		addr = i + 0x30000;
-		tmp += i;
-		u1sram_write(addr, tmp);
+	for (i = 0; i < 16; i++) {
+		addr = i + 0x80000;
+		value = tmp + i;
+		u1sram_write(addr, value);
 	}
 		break;
 	case 1: //read value for verification
-    	for (i = 0; i < 101; i++) {
-    		addr = i + 0x30000;
-    		tmp += i;
+    	for (i = 0; i < 16; i++) {
+		count = 100;
+    		addr = i + 0x80000;
+		//u1sram_write(addr, tmp+i);
+
     		value = u1sram_read(addr);
     
-    		if ((value&0xFFFF) != tmp)
+#if 0
+    		while ((value&0xFFFF) != (tmp+i) && count-- >0)
+    			value = u1sram_read(addr);
+#endif
+
+    		if ((value&0xFFFF) != (tmp+i))
     			printf("u1sram test: donot match at addr %x, val:[%x]--[%x]\n",
-    					addr, value, tmp);
+    					addr, value, (tmp+i));
     		else {
-    			if ((i%10) == 0)
+    		//	if ((i%10) == 0)
     				printf("u1sram test: read value %x from addr %x\n", value, addr);
     		}
     	}
@@ -368,7 +379,7 @@ void magnetic::download_lib_step(void)
             for (i=0; i<256; i++) {
                 if (read_buf[i] != read_back[i])
                     printf("No Match at 0x%x [0x%x]--[0x%x]\n",i, read_buf[i], read_back[i]);
-                }
+            }
         break;
     default:
         printf("Invalid operation command!\n");
